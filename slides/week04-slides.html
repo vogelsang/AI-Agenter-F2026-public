@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <meta name="author" content="Lasse Vogelsang">
+  <title>AI-Agenter-F2026 – 4. Large Language Models</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-422092a5e00d6ffa3175d97bbb8f7ab9.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-dark">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-image="images/Lec1_robot.png" data-background-opacity="0.5" class="quarto-title-block center">
+  <h1 class="title">4. Large Language Models</h1>
+  <p class="subtitle">AI Agenter og automatisering</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Lasse Vogelsang
+</div>
+</div>
+</div>
+
+</section>
+<section id="agenda" class="slide level2">
+<h2>Agenda</h2>
+<ul>
+<li class="fragment">Follow up from last time…</li>
+<li class="fragment">Assignment</li>
+<li class="fragment">AIs historie</li>
+<li class="fragment">LLMer</li>
+</ul>
+</section>
+<section>
+<section id="ai-agent" class="title-slide slide level1 center">
+<h1>AI Agent</h1>
+
+<img data-src="../slides/lec3_files/ppt/media/image3.jpeg" class="r-stretch"></section>
+<section id="prompt-user-message" class="slide level2">
+<h2>Prompt (User Message)</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li class="fragment">The prompt or the user message is the input to the AI agent
+<ul>
+<li class="fragment">This is the request to the agent</li>
+</ul></li>
+<li class="fragment">It does not have to be a human
+<ul>
+<li class="fragment">It can be other systems and even other agents</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<p><img data-src="../slides/lec3_files/ppt/media/image4.png"></p>
+</div></div>
+</section>
+<section id="system-message" class="slide level2">
+<h2>System message</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<ul>
+<li class="fragment">System messages (also called System Prompts) define how the model should behave.
+<ul>
+<li class="fragment">This is where you can get the agent to talk like a pirate – or something more useful</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width:40%;">
+<p><img data-src="../slides/lec3_files/ppt/media/image5.png"></p>
+</div></div>
+</section>
+<section id="assignments" class="slide level2">
+<h2>Assignments</h2>
+<ul>
+<li class="fragment">Feedback</li>
+<li class="fragment">Pet projects?</li>
+</ul>
+</section></section>
+<section>
+<section id="ai-history" class="title-slide slide level1 center">
+<h1>AI history</h1>
+<p>The term Artificial Intelligence&nbsp;was coined in 1956.&nbsp;</p>
+
+<img data-src="../slides/lec4_files/ppt/media/image1.jpeg" class="r-stretch"></section>
+<section id="turing-test" class="slide level2 smaller">
+<h2>Turing test</h2>
+<div class="columns">
+<div class="column" style="width:55%;">
+<ul>
+<li class="fragment">The Turing Test is a test for a machine’s ability to exhibit human-like intelligence.</li>
+<li class="fragment">Proposed by Alan Turing in 1950</li>
+<li class="fragment">It involves a human interrogator having text-based conversations with both a human and a machine.</li>
+<li class="fragment">If the interrogator cannot reliably tell the machine from the human, the machine is considered to have passed the test.</li>
+<li class="fragment">The test is designed to assess whether a machine can “think” by successfully imitating human conversation (originally called the “Imitation game”)</li>
+</ul>
+</div><div class="column" style="width:45%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../slides/lec4_files/ppt/media/image2.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div></div>
+</section>
+<section id="perceptron-in-the-1950s" class="slide level2">
+<h2>Perceptron in the 1950s</h2>
+<div class="columns" style="display: flex; align-items: center;">
+<div class="column" style="width:50%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image3.png"></p>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image4.png"></p>
+</div></div>
+</section>
+<section id="try-it-out" class="slide level2">
+<h2>Try it out</h2>
+<p><a href="https://dnn.jakup.dk/">https://dnn.jakup.dk/</a></p>
+</section>
+<section id="multi-layer" class="slide level2 smaller">
+<h2>Multi-layer</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<ul>
+<li class="fragment">Multi-layer perceptrons (MLPs) are necessary because single-layer perceptrons are limited to solving only linearly separable problems, such as classifying data that can be separated by a single straight line.</li>
+</ul>
+</div><div class="column" style="width:60%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../slides/lec4_files/ppt/media/image6.png" class="quarto-figure quarto-figure-center" style="background-color: white; padding: 20px;"></p>
+</figure>
+</div>
+</div></div>
+</section>
+<section id="new-set-of-problems-can-be-solved" class="slide level2">
+<h2>New set of problems can be solved</h2>
+
+<img data-src="../slides/lec4_files/ppt/media/image7.jpeg" title="Picture 4" class="r-stretch"></section>
+<section id="section" class="slide level2" data-menu-title="The linear issue 1">
+<h2></h2>
+
+<img data-src="../slides/lec4_files/ppt/media/image8.png" class="r-stretch"></section>
+<section id="section-1" class="slide level2" data-menu-title="The linear issue 2">
+<h2></h2>
+
+<img data-src="../slides/lec4_files/ppt/media/image9.png" title="Picture 4" class="r-stretch"></section>
+<section id="section-2" class="slide level2" data-menu-title="The linear issue 3">
+<h2></h2>
+
+<img data-src="../slides/lec4_files/ppt/media/image10.png" title="Picture 5" class="r-stretch"></section>
+<section id="we-add-hidden-layers" class="slide level2">
+<h2>We add hidden layers</h2>
+
+<img data-src="../slides/lec4_files/ppt/media/image11.jpeg" title="Content Placeholder 3" class="r-stretch"></section></section>
+<section>
+<section id="how-to-train-neural-networks" class="title-slide slide level1 center">
+<h1>How to train neural networks</h1>
+
+</section>
+<section id="back-propagation-1986" class="slide level2 smaller">
+<h2>Back propagation (1986)</h2>
+<div class="columns">
+<div class="column" style="width:35%;">
+<ul>
+<li class="fragment">A computer can learn from its mistakes (training)</li>
+<li class="fragment">Backward propagation of errors</li>
+<li class="fragment">An algorithm for supervised learning of artificial neural networks using gradient descent</li>
+<li class="fragment">Created by Geoffrey Hinton</li>
+</ul>
+</div><div class="column" style="width:65%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image12.jpeg" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="how-to-train-a-neural-network" class="slide level2">
+<h2>How to Train a Neural Network</h2>
+<div class="columns">
+<div class="column" style="width:42%;">
+<div style="font-size: 0.55em; line-height: 1.4;">
+<ol type="1">
+<li class="fragment"><strong>Initialize Weights</strong>: Start by assigning small, random values to all weights in the network.</li>
+<li class="fragment"><strong>Forward Propagation</strong>: Feed the network a known input to produce an output or a prediction.</li>
+<li class="fragment"><strong>Calculate Loss</strong>: Compare the network’s output to the correct output to determine the error.</li>
+<li class="fragment"><strong>Backpropagation &amp; Weight Adjustment</strong>: Calculate how much each weight contributed to the error, and adjust the weights to reduce this error.</li>
+<li class="fragment"><strong>Iterate</strong>: Repeat this process many times, allowing the network to gradually improve its accuracy by continuously refining its weights.</li>
+</ol>
+</div>
+</div><div class="column" style="width:58%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image12.jpeg" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="section-3" class="slide level2" data-menu-title="Gradient Descent">
+<h2></h2>
+
+<img data-src="../slides/lec4_files/ppt/media/image13.png" title="Content Placeholder 3" class="r-stretch"></section>
+<section id="local-vs-global" class="slide level2" data-text-align="center">
+<h2>Local vs global</h2>
+<div class="columns" style="display: flex; align-items: center;">
+<div class="column" style="width:50%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image14.png" style="width:100.0%"></p>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image15.png" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="logic-gate-truth-tables" class="slide level2">
+<h2>Logic Gate Truth Tables</h2>
+<div class="columns" style="text-align: center;">
+<div class="column" style="width:33%;">
+<h3 id="and">AND</h3>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">A</th>
+<th style="text-align: center;">B</th>
+<th style="text-align: center;">Out</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><strong>0</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><strong>0</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><strong>0</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:33%;">
+<h3 id="or">OR</h3>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">A</th>
+<th style="text-align: center;">B</th>
+<th style="text-align: center;">Out</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><strong>0</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:33%;">
+<h3 id="xor">XOR</h3>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: center;">A</th>
+<th style="text-align: center;">B</th>
+<th style="text-align: center;">Out</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><strong>0</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;"><strong>1</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;"><strong>0</strong></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+</section>
+<section id="perceptron-exercise" class="slide level2">
+<h2>Perceptron exercise</h2>
+<ul>
+<li class="fragment"><p>Use different layouts to solve XOR and NOR</p></li>
+<li class="fragment"><p>Set up a dataset, train it and see how the weights evolve</p></li>
+<li class="fragment"><p><a href="https://dnn.jakup.dk/">https://dnn.jakup.dk/</a></p></li>
+</ul>
+</section></section>
+<section>
+<section id="training-neural-networks" class="title-slide slide level1 center">
+<h1>Training Neural Networks</h1>
+
+</section>
+<section id="ibms-deep-blue" class="slide level2 smaller">
+<h2>1997 IBM’s Deep Blue</h2>
+
+<img data-src="../slides/lec4_files/ppt/media/image16.png" title="Picture 3" class="r-stretch"><p>Gary Kasparov lost&nbsp;in chess to&nbsp;IBM’s Deep Blue</p>
+<p>AI, but not neural networks</p>
+<p>A* and search trees used with advanced heuristics</p>
+</section>
+<section id="a-algorithm" class="slide level2" data-text-align="center">
+<h2>A* algorithm</h2>
+<div class="columns" style="display: flex; align-items: center;">
+<div class="column" style="width:50%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image17.png" style="width:100.0%"></p>
+</div><div class="column" style="width:50%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image18.png" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="deep-learning-2006" class="slide level2">
+<h2>Deep learning (2006)</h2>
+<div class="columns">
+<div class="column" style="width: 48%; font-size: 0.7em;">
+<ul>
+<li class="fragment">Deep learning is a specialized subfield of artificial intelligence (AI) and machine learning (ML)</li>
+<li class="fragment">It uses complex, multi-layered artificial neural networks to automatically learn intricate patterns from vast amounts of data, mimicking how the human brain processes information.</li>
+<li class="fragment">The “deep” in deep learning refers to the numerous hidden layers within the network—typically three or more, but often hundreds.</li>
+<li class="fragment">Inspired by how the brain works
+<ul>
+<li class="fragment">Neurons and synapses</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width: 52%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image19.png" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="section-4" class="slide level2" data-menu-title="Deep learning">
+<h2></h2>
+
+<img data-src="../slides/lec4_files/ppt/media/image20.png" title="Content Placeholder 6" class="r-stretch"></section>
+<section id="image-net-2010" class="slide level2 smaller">
+<h2>IMAGE-NET (2010)</h2>
+
+<img data-src="../slides/lec4_files/ppt/media/image21.jpeg" title="Picture 3" class="r-stretch"><p>Competition to recognize images</p>
+<p>More than 14 million images were hand-annotated&nbsp;to indicate what objects are pictured</p>
+</section>
+<section id="ibms-watson-ai-wins-in-jeopardy-2011" class="slide level2">
+<h2>IBM’s Watson AI wins in “Jeopardy!” (2011)</h2>
+
+<img data-src="../slides/lec4_files/ppt/media/image22.png" title="Content Placeholder 3" class="r-stretch"><p>The computer “understands” human language</p>
+</section>
+<section id="deep-neural-networks-2012" class="slide level2">
+<h2>Deep neural networks (2012)</h2>
+<div class="columns">
+<div class="column" style="width: 45%; font-size: 0.75em;">
+<ul>
+<li class="fragment">Paper by Jeff Dean and Andrew Ng</li>
+<li class="fragment">Unsupervised neural networks</li>
+<li class="fragment">“We can recognize a cat”</li>
+<li class="fragment">The AlexNet</li>
+<li class="fragment">The “Big Bang” of AI</li>
+<li class="fragment">Nvidia GPUs are being used for AI</li>
+</ul>
+</div><div class="column" style="width: 55%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image23.jpeg" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="deepmind-owned-by-google" class="slide level2 smaller">
+<h2>DeepMind (owned by Google)</h2>
+<div class="columns">
+<div class="column" style="width: 35%; font-size: 0.75em;">
+<ul>
+<li class="fragment">Wins in “GO” - thought this would have been impossible for decades to come</li>
+<li class="fragment">A* like algorithm with neural network for pruning and assessments</li>
+<li class="fragment">See “AlphaGo” video (2016)</li>
+<li class="fragment">Later on we get AlphaFold for medical work (<a href="https://www.youtube.com/watch?v=P_fHJIYENdI">https://www.youtube.com/watch?v=P_fHJIYENdI</a>)</li>
+</ul>
+</div><div class="column" style="width: 65%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image24.jpeg" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="transformers-2017" class="slide level2 smaller">
+<h2>Transformers (2017)</h2>
+<div class="columns">
+<div class="column" style="width: 45%; font-size: 0.75em;">
+<ul>
+<li class="fragment">2017 paper “Attention Is All You Need” by Google researchers</li>
+<li class="fragment">GPT = Generative Pre-trained <strong>Transformer</strong></li>
+<li class="fragment"><strong>Problem</strong>: Previous models processed text sequentially, word by word, which made it challenging for them to maintain context over long sentences and limited their ability to be parallelized for faster training</li>
+<li class="fragment"><a href="https://poloclub.github.io/transformer-explainer/">https://poloclub.github.io/transformer-explainer/</a></li>
+</ul>
+</div><div class="column" style="width: 55%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image25.png" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="self-attention" class="slide level2 smaller">
+<h2>Self-Attention</h2>
+<ul>
+<li class="fragment">Self-attention allows a model to weigh the importance of different words in a sentence when processing a particular word
+<ul>
+<li class="fragment">For example: “The robot picked up the red ball because it was the right color,”self-attention helps the model understand that “it” refers to the “ball” and not the “robot.”&nbsp;</li>
+</ul></li>
+<li class="fragment">For each word, the model can “look” at all other words in the input sequence and determine which ones are most relevant to understanding its meaning in that specific context</li>
+<li class="fragment">This ability to capture relationships between words, regardless of their distance from each other in the sentence, is a key advantage over sequential models</li>
+</ul>
+</section>
+<section id="encoder-and-decoder" class="slide level2">
+<h2>Encoder and decoder</h2>
+<p><strong><em>Encoder</em></strong> (left): The encoder receives an input and builds a representation of it (its features). This means that the model is optimized to acquire understanding from the input.</p>
+<p><strong><em>Decoder</em></strong> (right): The decoder uses the encoder’s representation (features) along with other inputs to generate a target sequence. This means that the model is optimized for generating outputs.</p>
+</section>
+<section id="try-it-out-1" class="slide level2">
+<h2>Try it out…</h2>
+<p><a href="https://poloclub.github.io/transformer-explainer/">https://poloclub.github.io/transformer-explainer/</a></p>
+</section>
+<section id="openai-gpt1-2018" class="slide level2">
+<h2>OpenAI GPT1 (2018)</h2>
+<div class="columns">
+<div class="column" style="width: 45%; font-size: 0.85em;">
+<p>OpenAI uses transformers to build LLMs (GPT1, 2,…)</p>
+</div><div class="column" style="width: 55%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image26.png" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="chatgpt-late-2022" class="slide level2">
+<h2>ChatGPT (late 2022)</h2>
+<div class="columns">
+<div class="column" style="width: 45%; font-size: 0.85em;">
+<ul>
+<li class="fragment">User-friendly chatbot is introduced</li>
+<li class="fragment">Generative AI becomes huge “overnight”</li>
+</ul>
+</div><div class="column" style="width: 55%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image26.png" style="width:100.0%"></p>
+</div></div>
+</section></section>
+<section>
+<section id="what-are-large-language-models" class="title-slide slide level1 center">
+<h1>What are Large Language Models?</h1>
+
+</section>
+<section id="neurale-netværk" class="slide level2">
+<h2>Neurale netværk</h2>
+<div class="columns">
+<div class="column" style="width: 40%; font-size: 0.8em;">
+<ul>
+<li class="fragment">Billions of parameters
+<ul>
+<li class="fragment">Inputs</li>
+<li class="fragment">Weights</li>
+<li class="fragment">Etc.</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width: 60%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image27.jpeg" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="llms-guess-the-next-word" class="slide level2">
+<h2>LLMs guess the next word</h2>
+<div class="columns">
+<div class="column" style="width: 42%; font-size: 0.8em;">
+<ul>
+<li class="fragment">A LLM is trained to guess the next most likely word</li>
+<li class="fragment">It is making qualified “guesses”</li>
+<li class="fragment">Sometimes it guesses “wrong”</li>
+</ul>
+</div><div class="column" style="width: 58%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image28.png" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="training-data" class="slide level2">
+<h2>Training data</h2>
+<div class="columns">
+<div class="column" style="width: 45%; font-size: 0.75em;">
+<ul>
+<li class="fragment">Text from the internet</li>
+<li class="fragment">Uses trillions of examples</li>
+</ul>
+</div><div class="column" style="width: 55%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image29.png" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="training" class="slide level2">
+<h2>Training</h2>
+<div class="columns">
+<div class="column" style="width: 45%; font-size: 0.8em;">
+<ul>
+<li class="fragment">Use back propagation (and other techniques) to find weights</li>
+<li class="fragment">Takes months to train the biggest models (cost +10 million dollars per model)</li>
+</ul>
+</div><div class="column" style="width: 55%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image30.png" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="guesses-unseen-words-not-in-training-data" class="slide level2">
+<h2>Guesses unseen words not in training data</h2>
+<div data-text-align="center" style="font-size: 0.7em;">
+<p>LLMs find a lot of patterns in the texts and can guess words it has not seen before</p>
+</div>
+
+<img data-src="../slides/lec4_files/ppt/media/image5.png" class="quarto-figure quarto-figure-center r-stretch" style="width:80.0%"></section>
+<section id="chatbot-training" class="slide level2">
+<h2>ChatBot training</h2>
+<div class="columns">
+<div class="column" style="width: 45%; font-size: 0.8em;">
+<ul>
+<li class="fragment">Reinforcement learning with Human Feedback</li>
+<li class="fragment">Use humans’ feedback to improve the model’s parameters</li>
+</ul>
+</div><div class="column" style="width: 55%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image31.jpeg" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="hardware" class="slide level2">
+<h2>Hardware</h2>
+<div class="columns">
+<div class="column" style="width: 45%; font-size: 0.8em;">
+<ul>
+<li class="fragment">Runs (best) on GPUs</li>
+<li class="fragment">Nvidia’s CUDA</li>
+<li class="fragment">One of history’s biggest infrastructure projects in the 500 billion dollar area</li>
+</ul>
+</div><div class="column" style="width: 55%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image32.jpeg" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="emergent-abilities" class="slide level2">
+<h2>Emergent Abilities</h2>
+<div class="columns">
+<div class="column" style="width: 45%; font-size: 0.6em;">
+<ul>
+<li class="fragment">Capabilities that are not explicitly programmed into the models</li>
+<li class="fragment">But spontaneously appear as the models are scaled up in size, data, and computational power</li>
+<li class="fragment">Sudden and unpredictable leap in performance on specific tasks</li>
+<li class="fragment">Examples:
+<ul>
+<li class="fragment">Complex Reasoning and Arithmetic</li>
+<li class="fragment">Code Generation</li>
+<li class="fragment">Answering Questions and Summarization</li>
+<li class="fragment">Chain-of-Thought Prompting</li>
+</ul></li>
+</ul>
+</div><div class="column" style="width: 55%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image33.jpeg" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="pre-training" class="slide level2">
+<h2>Pre-training</h2>
+<p>Training to create the original model – the model&nbsp;you download</p>
+</section>
+<section id="fine-tuning" class="slide level2">
+<h2>Fine-tuning</h2>
+<div class="columns">
+<div class="column" style="width: 45%; font-size: 0.8em;">
+<ul>
+<li class="fragment">Change some layers in the LLM</li>
+<li class="fragment">You train e.g.&nbsp;the last 2-3 layers of the model with data from your specific use case</li>
+<li class="fragment">Faster to re-train an existing model than starting from scratch</li>
+<li class="fragment">Can make the model specialized for your use</li>
+</ul>
+</div><div class="column" style="width: 55%;">
+<p><img data-src="../slides/lec4_files/ppt/media/image34.png" style="width:100.0%"></p>
+</div></div>
+</section>
+<section id="tokenization-and-the-token-window" class="slide level2 smaller">
+<h2>Tokenization and the Token Window</h2>
+<ul>
+<li class="fragment">LLMs don’t use words but&nbsp; break down text into smaller units called tokens</li>
+<li class="fragment">Tokens are whole words or a part of a word
+<ul>
+<li class="fragment">“Amoral” might be 2 tokens “a” and “moral”</li>
+</ul></li>
+<li class="fragment">The context window is the maximum number of tokens an LLM can “remember” or consider at one time when generating a response
+<ul>
+<li class="fragment">“It is the input layer to the neural network”</li>
+<li class="fragment">A 100K context window can approximately contain 75k words</li>
+</ul></li>
+</ul>
+</section>
+<section id="thinking---from-simple-prediction-to-complex-reasoning" class="slide level2">
+<h2>“Thinking” -&nbsp; From Simple Prediction to Complex Reasoning</h2>
+<ul>
+<li class="fragment">A technique where the model is prompted to “think step by step,” breaking down a complex problem into intermediate reasoning steps before arriving at a final answer.</li>
+<li class="fragment">This ability to follow a logical chain of thought is significantly more pronounced in larger models.</li>
+<li class="fragment">This is what we use for our AI&nbsp;Agents</li>
+</ul>
+</section>
+<section id="llm-limitations" class="slide level2 smaller">
+<h2>LLM&nbsp; limitations</h2>
+<ul>
+<li class="fragment">Hallucinations : LLMs can generate plausible but incorrect or nonsensical information.</li>
+<li class="fragment">Bias : They can reflect and amplify biases present in their training data.</li>
+<li class="fragment">Lack of True Understanding : At their core, LLMs are probabilistic models predicting the next token; they do not possess true consciousness or understanding in the human sense.</li>
+<li class="fragment">Computational Cost : Training and deploying large-scale LLMs requires significant computational resources.</li>
+</ul>
+</section>
+<section id="temperature" class="slide level2 smaller">
+<h2>Temperature</h2>
+<ul>
+<li class="fragment">Temperature is a key parameter that controls the randomness of an LLM’s output.</li>
+<li class="fragment">It’s a value, typically between 0 and 2, that you can set when you make a request to the model.</li>
+<li class="fragment">Think of it as a dial for creativity.</li>
+<li class="fragment">Low Temperature (e.g., 0.1 to 0.5): With a low temperature, the model becomes more deterministic and conservative.</li>
+<li class="fragment">High Temperature (e.g., 0.8 to 1.5): A higher temperature increases the chances of the model selecting less likely tokens.</li>
+</ul>
+</section>
+<section id="more-temperature" class="slide level2 smaller">
+<h2>More temperature</h2>
+<ul>
+<li class="fragment">Not True Creativity : While a higher temperature can lead to more novel-sounding outputs, it’s not the same as human creativity. It’s simply increasing the mathematical randomness of the word selection.[10][15] The model’s inherent creativity is more tied to its architecture and training data.[15]</li>
+<li class="fragment">Risk of Incoherence : Pushing the temperature too high can result in nonsensical or “hallucinated” outputs that don’t make sense.[7]</li>
+<li class="fragment">Finding the Balance : The right temperature setting depends entirely on the task at hand. For a reliable AI agent performing a predictable task, a low temperature is generally preferred.[10] For an agent designed to brainstorm or explore possibilities, a higher temperature might be more appropriate.[9]</li>
+</ul>
+</section>
+<section id="top-k-sampling" class="slide level2 smaller">
+<h2>Top-K Sampling</h2>
+<ul>
+<li class="fragment"><strong>Definition</strong>: Filters the probability distribution to keep only the top <em>k</em> most likely tokens.</li>
+<li class="fragment"><strong>Process</strong>:
+<ol type="1">
+<li class="fragment">Sort all possible next words by their probability.</li>
+<li class="fragment">Keep only the top <em>k</em> options (e.g., if <em>k</em>=40, only the 40 most likely words are considered).</li>
+<li class="fragment">Redistribute the probability mass among these <em>k</em> tokens.</li>
+<li class="fragment">Randomly sample the next word from this restricted set.</li>
+</ol></li>
+<li class="fragment"><strong>Impact</strong>:
+<ul>
+<li class="fragment"><strong>Pros</strong>: Very simple and prevents the model from picking completely nonsensical “long-tail” words.</li>
+<li class="fragment"><strong>Cons</strong>: It is not adaptive. If the model is very confident (one word is 99%), it still looks at the other 39. If the model is uncertain, it might cut off valid, high-quality choices.</li>
+</ul></li>
+</ul>
+</section>
+<section id="top-p-nucleus-sampling" class="slide level2 smaller">
+<h2>Top-P (Nucleus) Sampling</h2>
+<div style="font-size: 0.7em;">
+<ul>
+<li class="fragment"><strong>Definition</strong>: A dynamic approach that selects the smallest set of tokens whose cumulative probability exceeds a threshold <em>p</em>.</li>
+<li class="fragment"><strong>Process</strong>:
+<ol type="1">
+<li class="fragment">Sort all possible next words by probability.</li>
+<li class="fragment">Add words to a “nucleus” one by one until their combined probability reaches <em>p</em> (e.g., <em>p</em>=0.9 or 90%).</li>
+<li class="fragment">The number of words in the set grows or shrinks based on the model’s confidence.</li>
+<li class="fragment">Sample the next word only from this “nucleus.”</li>
+</ol></li>
+<li class="fragment"><strong>Impact</strong>:
+<ul>
+<li class="fragment"><strong>Pros</strong>: Adaptive. When the model is confident, the set is small (maybe 1 word); when it’s confused, the set is large.</li>
+<li class="fragment"><strong>Cons</strong>: Harder to predict exactly how many options the model will have at any given step.</li>
+</ul></li>
+<li class="fragment">Often considered superior to Top-K for maintaining a natural and creative “flow” in conversation.</li>
+</ul>
+</div>
+</section>
+<section id="øvelse" class="slide level2 smaller">
+<h2>Øvelse</h2>
+<ul>
+<li class="fragment">Vi bruger LLMer til vores agenter</li>
+<li class="fragment">Hvilken betydning har LLMerne ” sandsynligheds -element” for hvad vores agenter kan gøre og hvilke svar vores agenter kan give os ?</li>
+<li class="fragment">Tag gerne jeres erfaringer med ChatBots med ( ChatGPT , Claude, etc.)</li>
+<li class="fragment">Forbered et svar til resten af klassen</li>
+<li class="fragment">Tænk selv i 5 minutter</li>
+<li class="fragment">Diskuter dine tanker&nbsp;med 1-2 andre personer (5 min)</li>
+</ul>
+</section>
+<section id="overvej" class="slide level2">
+<h2>Overvej</h2>
+<ul>
+<li class="fragment"><p>Deterministisk vs.&nbsp;Sandsynligheder</p>
+<ul>
+<li class="fragment">Forskellen på &nbsp;“at vide” og &nbsp;“at gætte”</li>
+</ul></li>
+<li class="fragment"><p>Træningsdata</p></li>
+<li class="fragment"><p>Hvad ved LLMen ?</p></li>
+<li class="fragment"><p>“Bias”?</p></li>
+<li class="fragment"><p>Hvor eksekveres modellen ?</p></li>
+<li class="fragment"><p>Hvem får vores data? Er det ok?</p></li>
+</ul>
+</section>
+<section id="assignment" class="slide level2">
+<h2>Assignment</h2>
+<ul>
+<li class="fragment">Write max 1 page about:
+<ul>
+<li class="fragment">the functionality of LLMs</li>
+<li class="fragment">Pros and cons with LLMs</li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="prompt-engineering" class="title-slide slide level1 center">
+<h1>Prompt engineering</h1>
+
+</section>
+<section id="prompt-engineering-1" class="slide level2">
+<h2>Prompt engineering</h2>
+<p>How to instruct our LLMs and Agents – next time</p>
+</section>
+<section id="prompting-ai-agents" class="slide level2">
+<h2>Prompting AI Agents</h2>
+<ul>
+<li class="fragment"><p>There is no “single way” to do this</p></li>
+<li class="fragment"><p>The LLMs are different</p></li>
+<li class="fragment"><p>Size/typography</p></li>
+<li class="fragment"><p>Training</p></li>
+<li class="fragment"><p>The tasks at hand are different</p></li>
+</ul>
+</section>
+<section id="a-structure-for-ai-agent-prompts" class="slide level2">
+<h2>A structure for AI Agent prompts</h2>
+<p>Roles</p>
+<p>Tasks</p>
+<p>Requirements</p>
+<p>Instructions</p>
+</section>
+<section id="role" class="slide level2">
+<h2>Role</h2>
+<p>Defines the persona the model should adopt. Influences tone, knowledge, and style.</p>
+<p>“Act as a senior software architect.”</p>
+</section>
+<section id="task" class="slide level2">
+<h2>Task</h2>
+<p>The specific, clear objective for the model.</p>
+<p>“Outline a project plan for a new microservices application.”</p>
+</section>
+<section id="requirements" class="slide level2">
+<h2>Requirements</h2>
+<p>Conditions that dictate the output’s format and constraints.</p>
+<p>“The outline should be a numbered list with a maximum of five top-level items.”</p>
+</section>
+<section id="instructions" class="slide level2">
+<h2>Instructions</h2>
+<p>Guidance on how to execute the task. Provides intermediate steps or examples.</p>
+<p>“For each microservice, provide a brief description and a list of its core dependencies.”</p>
+</section>
+<section id="a-good-prompt" class="slide level2">
+<h2>A good prompt</h2>
+
+<img data-src="../slides/lec5_files/ppt/media/image1.png" title="Content Placeholder 3" class="r-stretch"></section></section>
+<section>
+<section id="ollama" class="title-slide slide level1 center">
+<h1>Ollama</h1>
+<ul>
+<li class="fragment">Ollama = Local LLM server for running models like LLaMA , Mistral, Gemma.</li>
+<li class="fragment">Ollama is an open-source framework that lets you run and manage large language models ( LLMs ) directly on your local machine , providing privacy , control , and offline AI capabilities .</li>
+</ul>
+</section>
+<section id="quantization" class="slide level2">
+<h2>Quantization</h2>
+<ul>
+<li class="fragment">Less precision of weights (prune the neural network)</li>
+<li class="fragment">“Smaller model” that can fit in less RAM</li>
+<li class="fragment">Less precision of the models</li>
+<li class="fragment">Does not ecessarily degrade “performance” of the model significantly</li>
+</ul>
+</section>
+<section id="what-to-remember" class="slide level2 smaller">
+<h2>What to Remember</h2>
+<ul>
+<li class="fragment">LLMs are neural networks that predict the next token from patterns in huge datasets.</li>
+<li class="fragment">Better prompting gives better outputs: define role, task, requirements, and clear instructions.</li>
+<li class="fragment">Outputs are probabilistic, not facts: verify important answers.</li>
+<li class="fragment">Temperature and sampling settings control creativity vs.&nbsp;reliability.</li>
+<li class="fragment">Model quality, context window, and hardware constraints shape what your agent can do.</li>
+</ul>
+
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
+
+  <meta name="author" content="Lasse Vogelsang">
+  <title>AI-Agenter-F2026 – 1. AI agenter og automatisering</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #f8f8f2;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #f8f8f2; } /* Normal */
+    code span.al { color: #f07178; } /* Alert */
+    code span.an { color: #d4d0ab; } /* Annotation */
+    code span.at { color: #00e0e0; } /* Attribute */
+    code span.bn { color: #d4d0ab; } /* BaseN */
+    code span.bu { color: #abe338; } /* BuiltIn */
+    code span.cf { color: #ffa07a; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #abe338; } /* Char */
+    code span.cn { color: #ffd700; } /* Constant */
+    code span.co { color: #f8f8f2; font-style: italic; } /* Comment */
+    code span.cv { color: #ffd700; } /* CommentVar */
+    code span.do { color: #f8f8f2; } /* Documentation */
+    code span.dt { color: #ffa07a; } /* DataType */
+    code span.dv { color: #d4d0ab; } /* DecVal */
+    code span.er { color: #f07178; text-decoration: underline; } /* Error */
+    code span.ex { color: #00e0e0; font-weight: bold; } /* Extension */
+    code span.fl { color: #d4d0ab; } /* Float */
+    code span.fu { color: #ffa07a; } /* Function */
+    code span.im { color: #abe338; } /* Import */
+    code span.in { color: #d4d0ab; } /* Information */
+    code span.kw { color: #ffa07a; font-weight: bold; } /* Keyword */
+    code span.op { color: #ffa07a; } /* Operator */
+    code span.ot { color: #00e0e0; } /* Other */
+    code span.pp { color: #dcc6e0; } /* Preprocessor */
+    code span.re { color: #00e0e0; background-color: #f8f8f2; } /* RegionMarker */
+    code span.sc { color: #abe338; } /* SpecialChar */
+    code span.ss { color: #abe338; } /* SpecialString */
+    code span.st { color: #abe338; } /* String */
+    code span.va { color: #00e0e0; } /* Variable */
+    code span.vs { color: #abe338; } /* VerbatimString */
+    code span.wa { color: #dcc6e0; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-422092a5e00d6ffa3175d97bbb8f7ab9.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-dark">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-image="images/Lec1_robot.png" data-background-opacity="0.5" class="quarto-title-block center">
+  <h1 class="title">1. AI agenter og automatisering</h1>
+  <p class="subtitle">1. Lecture - Introduction</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Lasse Vogelsang
+</div>
+</div>
+</div>
+
+</section>
+<section>
+<section id="introduction-to-ai-agents" class="title-slide slide level1 center">
+<h1>Introduction to AI Agents</h1>
+
+</section>
+<section id="agenda" class="slide level2 nonincremental">
+<h2>Agenda</h2>
+<ul>
+<li class="fragment">Course introduction</li>
+<li class="fragment">Who am I?</li>
+<li class="fragment">The systems we use</li>
+<li class="fragment">Goals for today and Monday:
+<ul>
+<li class="fragment">n8n installed – and working</li>
+<li class="fragment">First agent created in n8n – the ultimate test of the setup</li>
+<li class="fragment">Introduction to n8n and the first “real” workflow</li>
+</ul></li>
+</ul>
+</section>
+<section id="start-installing" class="slide level2">
+<h2>Start installing…</h2>
+<ul>
+<li class="fragment">Download Docker Desktop</li>
+<li class="fragment">Run the n8n Docker command (this will automatically download the image)</li>
+</ul>
+</section>
+<section id="who-am-i" class="slide level2 nonincremental">
+<h2>Who Am I?</h2>
+<ul>
+<li class="fragment">Educated from RUC, UC Irvine, Georgia State, IT-University of Copenhagen, CBS
+<ul>
+<li class="fragment">Ph.D in systems development</li>
+<li class="fragment">Master (Kandidat) in software development</li>
+<li class="fragment">MBA in general management</li>
+</ul></li>
+<li class="fragment">Teaching experience from EA, The IT-University and UC Irvine</li>
+<li class="fragment">Forskning i systemudviklingsmetoder</li>
+<li class="fragment">P.t. i et forskningsprojekt om brug af AI i systemudvikling</li>
+</ul>
+</section>
+<section id="experience" class="slide level2 nonincremental">
+<h2>Experience</h2>
+<ul>
+<li class="fragment">+15 years of practical experience in systems development</li>
+<li class="fragment">Worked at
+<ul>
+<li class="fragment">Netcompany</li>
+<li class="fragment">Edlund</li>
+<li class="fragment">Saxo Bank</li>
+</ul></li>
+<li class="fragment">My Roles
+<ul>
+<li class="fragment">Developer</li>
+<li class="fragment">Project manager</li>
+<li class="fragment">Manager/leader/head of department</li>
+</ul></li>
+</ul>
+</section>
+<section id="techniques-processes-and-tools" class="slide level2 nonincremental">
+<h2>Techniques, processes and tools</h2>
+<ul>
+<li class="fragment">Developed in .net and C# (Java a long time ago)
+<ul>
+<li class="fragment">1.000 DB tables</li>
+<li class="fragment">1.000 projects</li>
+<li class="fragment">10 mill. Lines of code</li>
+<li class="fragment">High business complexity</li>
+</ul></li>
+<li class="fragment">Azure Devops, Jira, and other tools</li>
+<li class="fragment">Github, Cloud, AI, ..</li>
+<li class="fragment">DevOps and Quality assurance (test automation)</li>
+</ul>
+</section>
+<section id="questions" class="slide level2 nonincremental">
+<h2>Questions?</h2>
+<ul>
+<li class="fragment">Contact me via mail: <a href="mailto:lavo@ek.dk" class="email">lavo@ek.dk</a></li>
+<li class="fragment">I “don’t” answer messages on fronter!</li>
+</ul>
+</section></section>
+<section>
+<section id="course-overview" class="title-slide slide level1 center">
+<h1>Course overview</h1>
+
+</section>
+<section id="studieordningen" class="slide level2 smaller">
+<h2>Studieordningen</h2>
+<p><strong>FORMÅL OG LÆRINGSMÅL</strong></p>
+<p>AI Agenter er avanceret AI, som selvstændigt finder strategi og løsning på komplekse opgaver. LLMer (som ChatGPT) er AI som mennesker kan chatte med og få svar, mens en AI Agent selvstændigt udfører opgaver. En AI agent har adgang til systemer og værktøjer, som den bruger til at udføre opgaver automatisk.​ ​</p>
+<p>På kurset lærer du at opsætte workflows til automatisering af opgaver, som spænder fra at få daglige nyheder om f.eks. AI agenter, til et større SOME marketings setup. Du vil lære om hvordan large language models (som ChatGPT) virker og at bruge dem til AI agenter. Du vil lære prompt engineering til instruere AI agenterne til at udføre deres opgaver. Derudover kigger vi på RAGs, hvor AI får information fra vector databaser til deres opgaver​</p>
+<p>​ Vi bruger workflow værktøjet n8n til at sætte vores agenter og workflows op. Der vil være behov en smule JavaScript, hvor det meste dog kan fås fra diverse LLMer uden de store problemer. Der vil være mulighed for at bruge Python e.lign programmeringssprog i det afsluttende projekt, men det er ikke et krav.</p>
+</section>
+<section id="læringsmål" class="slide level2 smaller">
+<h2>Læringsmål</h2>
+<ul>
+<li class="fragment"><strong>Viden</strong>
+<ul>
+<li class="fragment">Ved hvad de forskellige LLMer er gode til</li>
+<li class="fragment">Viden om workflows og AI agenter</li>
+<li class="fragment">Kendskab til forskellige arkitekturer (sekventiel vs.&nbsp;parallel)</li>
+</ul></li>
+<li class="fragment"><strong>Færdigheder</strong>
+<ul>
+<li class="fragment">Kan oprette workflows til automatisk udførsel af arbejds- og andre processer</li>
+<li class="fragment">Bruge prompt engineering til at instruere agenter</li>
+<li class="fragment">Oprette og instruere en AI Agent til at udføre en del af en arbejdsproces</li>
+<li class="fragment">Kan teste og optimere workflows med AI agenter</li>
+<li class="fragment">Oprette og bruge RAGS og vector databaser i workflows</li>
+</ul></li>
+</ul>
+</section>
+<section id="læringsmål-1" class="slide level2 smaller">
+<h2>Læringsmål</h2>
+<ul>
+<li class="fragment"><strong>Kompetencer</strong>
+<ul>
+<li class="fragment">Vælge LLMer til brug i automatisering</li>
+<li class="fragment">Kunne vurdere brug af forskellige elementer i et workflow</li>
+<li class="fragment">Gennemføre projekt med workflow og opsætning af AI agenter</li>
+</ul></li>
+</ul>
+</section>
+<section id="lecture-plan-i" class="slide level2 smaller">
+<h2>Lecture Plan I</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 17%">
+<col style="width: 74%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Week</th>
+<th style="text-align: left;">Date</th>
+<th style="text-align: left;">Emne</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>5</strong></td>
+<td style="text-align: left;">26-01-26</td>
+<td style="text-align: left;">Introduktion og de første workflows</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>6</strong></td>
+<td style="text-align: left;">02-02-26</td>
+<td style="text-align: left;">n8n intro - backup workflow - credentials - etc</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>7</strong></td>
+<td style="text-align: left;">09-02-26</td>
+<td style="text-align: left;">AI agents - simple</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>8</strong></td>
+<td style="text-align: left;">16-02-26</td>
+<td style="text-align: left;">LLM, Ollama intro og mere n8n</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>9</strong></td>
+<td style="text-align: left;">23-02-26</td>
+<td style="text-align: left;">Prompt engineering - promptning af agenterne</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>10</strong></td>
+<td style="text-align: left;">02-03-26</td>
+<td style="text-align: left;">AI agents - tools, decision making, multi-agents</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>11</strong></td>
+<td style="text-align: left;">09-03-26</td>
+<td style="text-align: left;">RAG - Simple RAG</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>12</strong></td>
+<td style="text-align: left;">16-03-26</td>
+<td style="text-align: left;">RAG - Graph RAG</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>13</strong></td>
+<td style="text-align: left;">23-03-26</td>
+<td style="text-align: left;">Projekt - opstart</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="lecture-plan-ii" class="slide level2 smaller">
+<h2>Lecture Plan II</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 17%">
+<col style="width: 74%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Week</th>
+<th style="text-align: left;">Date</th>
+<th style="text-align: left;">Emne</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>14</strong></td>
+<td style="text-align: left;">30-03-26</td>
+<td style="text-align: left;"><strong>PÅSKE</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>15</strong></td>
+<td style="text-align: left;">06-04-26</td>
+<td style="text-align: left;"><strong>PÅSKE</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>16</strong></td>
+<td style="text-align: left;">13-04-26</td>
+<td style="text-align: left;">MCP - feedback projekter</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>17</strong></td>
+<td style="text-align: left;">20-04-26</td>
+<td style="text-align: left;">MCP og vibe coding</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>18</strong></td>
+<td style="text-align: left;">27-04-26</td>
+<td style="text-align: left;">Kvalitetssikring</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>19</strong></td>
+<td style="text-align: left;">04-05-26</td>
+<td style="text-align: left;">Opsamling, nyt emne og opstart af projekt</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>20</strong></td>
+<td style="text-align: left;">11-05-26</td>
+<td style="text-align: left;">Projekt</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>21</strong></td>
+<td style="text-align: left;">18-05-26</td>
+<td style="text-align: left;">Projekt - eksamenssnak</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="teaching-approach" class="slide level2 nonincremental">
+<h2>Teaching Approach</h2>
+<ul>
+<li class="fragment">Introduction of the topics and dialogue</li>
+<li class="fragment">Topic discussions
+<ul>
+<li class="fragment">1-on-1 sessions</li>
+</ul></li>
+<li class="fragment">Exercises
+<ul>
+<li class="fragment">Easy, medium, hard – allows for progression</li>
+<li class="fragment">Find your own “Pet project”</li>
+</ul></li>
+</ul>
+</section>
+<section id="projects" class="slide level2">
+<h2>Projects</h2>
+<ul>
+<li class="fragment">2-week project
+<ul>
+<li class="fragment">Use of specific technology</li>
+</ul></li>
+<li class="fragment">Exam project
+<ul>
+<li class="fragment">Building workflows and agents for a specific case</li>
+<li class="fragment">Must be demonstrated as working workflows at the exam</li>
+</ul></li>
+<li class="fragment">Individual projects
+<ul>
+<li class="fragment">Important to be engaged from the start due to course progression</li>
+</ul></li>
+</ul>
+</section>
+<section id="the-exam" class="slide level2">
+<h2>The Exam</h2>
+<ul>
+<li class="fragment">Independent assessment of the course/module</li>
+<li class="fragment">Oral exam
+<ul>
+<li class="fragment">10-minute presentation of final project followed by a 20-minute examination (including grading)</li>
+<li class="fragment">The exam is individual</li>
+</ul></li>
+<li class="fragment">Implementation of a workflow and a presentation of the considerations regarding its implementation</li>
+<li class="fragment">The workflow must run on your own computer
+<ul>
+<li class="fragment">Using external services is permitted</li>
+</ul></li>
+</ul>
+</section>
+<section id="readings" class="slide level2">
+<h2>Readings</h2>
+<ul>
+<li class="fragment">The course is not “literature heavy”</li>
+<li class="fragment">I expect you to be proactive in seeking information, especially in connection with exercises and projects</li>
+</ul>
+</section>
+<section id="use-of-ai-for-this-class" class="slide level2">
+<h2>Use of AI for this class</h2>
+<ul>
+<li class="fragment">How much AI am I allowed to use?
+<ul>
+<li class="fragment">As much as you want! Use of AI is anticipated. The course will be hard if you don’t use AI to do assignments and projects.</li>
+<li class="fragment">It is part of the course (and the exam) to account for how you used AI to solve your tasks. The exam will focus on how you prompted the AIs and your overall process.</li>
+</ul></li>
+</ul>
+</section>
+<section id="which-models-to-use" class="slide level2">
+<h2>Which models to use?</h2>
+<ul>
+<li class="fragment">You can use whatever you like.</li>
+<li class="fragment">I have been using Claude. Gemini has a fair amount of free tokens.</li>
+<li class="fragment">It is part of the course to have challenges in the use of LLMs.</li>
+<li class="fragment">Own computer (Ollama)</li>
+</ul>
+</section>
+<section id="guest-speakers" class="slide level2">
+<h2>Guest speakers</h2>
+<p>TBA</p>
+</section>
+<section id="course-pages" class="slide level2">
+<h2>Course pages</h2>
+<ul>
+<li class="fragment">You can find the course material here: https://vogelsang.github.io/AI-Agenter-F2026-public</li>
+<li class="fragment">Exercises and projects has to be turned in on ItsLearning - https://ek.itslearning.com/ContentArea/ContentArea.aspx?LocationID=7569&amp;LocationType=1</li>
+</ul>
+</section>
+<section id="slides" class="slide level2">
+<h2>Slides</h2>
+<ul>
+<li class="fragment">Normally comes on the day of the lecure. Might come out earlier. I might change slides up until right before class (don’t print them)</li>
+<li class="fragment">Mix of English and Danish</li>
+</ul>
+</section>
+<section id="ground-rules" class="slide level2">
+<h2>Ground rules</h2>
+<ul>
+<li class="fragment">Show up on time</li>
+<li class="fragment">Be reasonable</li>
+</ul>
+</section>
+<section id="where-to-find-course-material" class="slide level2">
+<h2>Where to find course material?</h2>
+<p>Course material on Github site: - https://vogelsang.github.io/AI-Agenter-F2026-public/</p>
+<p>Announcements and assignment turn ins on ItsLearning - https://ek.itslearning.com/ContentArea/ContentArea.aspx?LocationID=7569&amp;LocationType=1</p>
+</section></section>
+<section>
+<section id="ai-agents" class="title-slide slide level1 center">
+<h1>AI agents</h1>
+
+</section>
+<section id="large-language-models-chatbots" class="slide level2">
+<h2>Large Language Models &amp; ChatBots</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li class="fragment">We are familiar with ChatGPT, Gemini, Claude, Grok, etc.</li>
+<li class="fragment">Standard interaction: A human asking a chatbot.</li>
+<li class="fragment">Using natural spoken language (no coding required)</li>
+<li class="fragment">LLMs are neural networks, but more about that later</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><img data-src="images/lec_chatGpt.png"></p>
+</div></div>
+</section>
+<section id="large-language-model" class="slide level2">
+<h2>Large Language model</h2>
+<ul>
+<li class="fragment"><p>An LLM is a type of Artificial Intelligence trained on vast amounts of text data to understand, generate, and manipulate human language.</p></li>
+<li class="fragment"><p>To break it down:</p>
+<ul>
+<li class="fragment">Large: Refers to the scale of the training data (petabytes of text) and the complexity of the model (billions of “parameters”).</li>
+<li class="fragment">Language: It is built to process communication—not just English or Danish, but also computer code and mathematical logic. Model: It is a complex mathematical representation of patterns found in human thought and speech.</li>
+</ul></li>
+</ul>
+</section>
+<section id="llm" class="slide level2">
+<h2>LLM</h2>
+<p>An LLM is a highly advanced statistical autocomplete. It doesn’t ‘know’ facts like a person does; instead, it predicts the next most likely word (token) in a sequence based on everything it has ever read.</p>
+</section>
+<section id="artificial-intelligence" class="slide level2">
+<h2>Artificial intelligence</h2>
+<ul>
+<li class="fragment"><p>The application of computer systems able to perform tasks or produce output normally requiring human intelligence, especially by applying machine learning techniques to large collections of data.</p></li>
+<li class="fragment"><p>A program or other piece of software that performs tasks or produces output normally requiring human intelligence. (Oxfrord dixionary)</p></li>
+</ul>
+</section></section>
+<section>
+<section id="ai-agents-1" class="title-slide slide level1 center">
+<h1>AI Agents</h1>
+
+</section>
+<section id="what-is-an-ai-agent" class="slide level2">
+<h2>What is an AI Agent?</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<h3 id="the-wrapper-concept">The “Wrapper” Concept</h3>
+<ul>
+<li class="fragment">We place a software layer around the LLM.</li>
+<li class="fragment"><strong>LLM</strong> = The Brain.</li>
+<li class="fragment"><strong>Software</strong> = The Body.</li>
+</ul>
+</div><div class="column" style="width:55%;">
+<p><img data-src="images/lec1_ai_Agent.png"></p>
+</div></div>
+</section>
+<section id="what-is-an-ai-agent-1" class="slide level2">
+<h2>What is an AI Agent?</h2>
+<div class="columns">
+<div class="column" style="width:45%;">
+<h3 class="fragment" id="key-capabilities">Key Capabilities:</h3>
+<ul>
+<li class="fragment"><strong>Reasoning</strong>: Planning steps to a goal.</li>
+<li class="fragment"><strong>Memory</strong>: Remembering past context.</li>
+<li class="fragment"><strong>Tools</strong>: Interacting with APIs/Databases.</li>
+</ul>
+</div><div class="column" style="width:55%;">
+<p><img data-src="images/lec1_ai_Agent.png"></p>
+</div></div>
+</section>
+<section id="example-the-meeting-booking-agent" class="slide level2">
+<h2>Example: The Meeting Booking Agent</h2>
+<p><strong>The Goal:</strong> “Schedule a 30-minute sync with Peter next Tuesday afternoon.”</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="chatbot-passive"><strong>Chatbot (Passive)</strong></h3>
+<ul>
+<li class="fragment"><strong>User:</strong> “Book a meeting with Peter.”</li>
+<li class="fragment"><strong>Bot:</strong> “Tells you to look up in the calendars and send invite to Peter.”</li>
+<li class="fragment"><strong>Result:</strong> User has to do the work.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="ai-agent-active"><strong>AI Agent (Active)</strong></h3>
+<ul>
+<li class="fragment"><strong>User:</strong> “Book a meeting with Peter.”</li>
+<li class="fragment"><strong>Agent:</strong> Searches contacts for Peter, checks your calendar, emails Peter options, and creates the invite.</li>
+<li class="fragment"><strong>Result:</strong> <strong>Task Completed.</strong></li>
+</ul>
+</div></div>
+</section>
+<section id="how-the-agent-thinks" class="slide level2 smaller">
+<h2>How the Agent Thinks</h2>
+<p>When you give the command, the Agent enters a <strong>Thought-Action-Observation</strong> loop:</p>
+<ol type="1">
+<li class="fragment"><strong>Thought:</strong> I need to find Peter’s email address.
+<ul>
+<li class="fragment"><strong>Action:</strong> Search CRM/Contacts tool for “Peter.”</li>
+<li class="fragment"><strong>Observation:</strong> Found <code>peter@company.com</code>.</li>
+</ul></li>
+<li class="fragment"><strong>Thought:</strong> I need to find free slots on Tuesday afternoon.
+<ul>
+<li class="fragment"><strong>Action:</strong> Check Google Calendar for Tuesday between 13:00 and 17:00.</li>
+<li class="fragment"><strong>Observation:</strong> User is free at 14:00 and 15:30.</li>
+</ul></li>
+<li class="fragment"><strong>Thought:</strong> I will propose these times to Peter via email.
+<ul>
+<li class="fragment"><strong>Action:</strong> Send email to Peter via Gmail tool.</li>
+<li class="fragment"><strong>Observation:</strong> Email sent successfully.</li>
+</ul></li>
+<li class="fragment"><strong>Final Response:</strong> “I’ve reached out to Peter with two options for Tuesday afternoon.”</li>
+</ol>
+</section>
+<section id="the-agents-hands-tools" class="slide level2">
+<h2>The Agent’s “Hands” (Tools)</h2>
+<p>To book that meeting, the Agent was connected to these <strong>n8n nodes</strong>:</p>
+<ul>
+<li class="fragment"><strong>Google Contacts</strong>: To find the right person.</li>
+<li class="fragment"><strong>Google Calendar</strong>: To read availability and write the event.</li>
+<li class="fragment"><strong>Gmail / Outlook</strong>: To communicate with the external party.</li>
+<li class="fragment"><strong>LLM (The Brain)</strong>: To decide which tool to use and what to write.</li>
+</ul>
+</section>
+<section id="llm-vs.-ai-agent" class="slide level2 smaller">
+<h2>LLM vs.&nbsp;AI Agent</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">LLM (The Brain)</th>
+<th style="text-align: left;">AI Agent (The Worker)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Core Capability</strong></td>
+<td style="text-align: left;">Text generation &amp; knowledge</td>
+<td style="text-align: left;">Goal-oriented task completion</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Decision-Making</strong></td>
+<td style="text-align: left;">None (predicts next word)</td>
+<td style="text-align: left;"><strong>Yes</strong> (chooses what to do next)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Tool Use</strong></td>
+<td style="text-align: left;">No (Static)</td>
+<td style="text-align: left;"><strong>Yes</strong> (Uses APIs, Web, n8n)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Workflow</strong></td>
+<td style="text-align: left;">Single-step (Prompt -&gt; Result)</td>
+<td style="text-align: left;"><strong>Multi-step</strong> (Loop until finished)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Scope</strong></td>
+<td style="text-align: left;">Generates language</td>
+<td style="text-align: left;">Performs real-world actions</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Example</strong></td>
+<td style="text-align: left;">Writing a poem</td>
+<td style="text-align: left;"><strong>Researching a lead and sending an email</strong></td>
+</tr>
+</tbody>
+</table>
+</section></section>
+<section>
+<section id="workflows" class="title-slide slide level1 center">
+<h1>Workflows</h1>
+
+</section>
+<section id="the-recipe-analogy" class="slide level2">
+<h2>The “Recipe” Analogy</h2>
+<ul>
+<li class="fragment"><strong>The Business Process</strong>: “Making Dinner for 10 People” (The high-level goal).</li>
+<li class="fragment"><strong>The Workflow</strong>: “The Recipe for Lasagna” (The specific, repeatable steps).</li>
+</ul>
+<p><strong>A Workflow must be:</strong> {.fragment} - <strong>Explicit</strong>: No guessing. Every step is defined. - <strong>Repeatable</strong>: If you follow the recipe exactly, you get the same meal every time. - <strong>Automatable</strong>: Once the recipe is clear, a “robot chef” (n8n) can do the cooking for you.</p>
+</section>
+<section id="agents-need-workflows" class="slide level2">
+<h2>Agents need workflows</h2>
+<ul>
+<li class="fragment">An LLM (Agent) might know how to write an email, but it doesn’t know when to send it, where to get the email address, or how to log the activity in a database.</li>
+<li class="fragment">The Workflow is the skeleton that gives the Agent a purpose and access to the real world.</li>
+<li class="fragment">We don’t just build AI Agents to have a conversation. We build Workflows to give those Agents a job to do.</li>
+</ul>
+</section>
+<section id="section" class="slide level2" data-background-image="images/lec1_n8n_workflow.png" data-background-size="contain">
+<h2></h2>
+<!-- This slide is intentionally left blank to let the image fill the screen -->
+</section>
+<section id="deterministic-vs.-agentic-workflows" class="slide level2">
+<h2>Deterministic vs.&nbsp;Agentic Workflows</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="deterministic"><strong>Deterministic</strong></h3>
+<p><em>The Traditional Way</em> - <strong>Rules-based</strong>: “If This, Then That.” - <strong>Fixed Paths</strong>: Every step is pre-defined. - <strong>Predictable</strong>: Given the same input, you always get the same output. - <strong>Analogy</strong>: A train on tracks.</p>
+</div><div class="column" style="width:50%;">
+<h3 id="agentic"><strong>Agentic</strong></h3>
+<p><em>The AI-Powered Way</em> - <strong>Goal-based</strong>: “Find the answer to X.” - <strong>Dynamic Paths</strong>: The AI decides which tools to use in real-time. - <strong>Flexible</strong>: Can handle unexpected data or “fuzzy” logic. - <strong>Analogy</strong>: A taxi driver.</p>
+</div></div>
+</section>
+<section id="the-n8n-superpower" class="slide level2">
+<h2>The n8n “Superpower”</h2>
+<div class="fragment">
+<blockquote>
+<p>We build deterministic workflows that use AI Agents as “intelligent stops” along the way.</p>
+</blockquote>
+</div>
+<!-- train and drone -->
+</section>
+<section id="exercise" class="slide level2">
+<h2>Exercise</h2>
+<ul>
+<li class="fragment">Discuss and identify three everyday tasks that could be automated or improved with AI agent and workflows.​</li>
+<li class="fragment">Try to find something in your own life that could be automated (find your “pet project”?)</li>
+</ul>
+</section></section>
+<section id="systems-we-use" class="title-slide slide level1 center">
+<h1>Systems we use</h1>
+
+</section>
+
+<section>
+<section id="n8n" class="title-slide slide level1 center">
+<h1>n8n</h1>
+
+</section>
+<section id="n8n-nodes-to-nodes" class="slide level2">
+<h2>n8n: Nodes to Nodes</h2>
+<div class="columns">
+<div class="column" style="width:35%;">
+<h3 id="what-is-n8n"><strong>What is n8n?</strong></h3>
+<ul>
+<li class="fragment"><strong>Nodes to Nodes</strong>: The name represents how data flows between blocks.</li>
+<li class="fragment"><strong>Workflow Automation</strong>: A tool designed to build complex logic between apps.</li>
+<li class="fragment"><strong>Visual Programming</strong>: You “code” by connecting nodes rather than writing lines of text.</li>
+</ul>
+</div><div class="column fragment" style="width:65%;">
+<p><img data-src="images/lec1_n8n_workflow2.png" class="fragment"></p>
+<p><em>A workflow is a sequence of nodes that process data from start to finish.</em> {.fragment}</p>
+</div></div>
+</section>
+<section id="more-n8n" class="slide level2">
+<h2>More n8n</h2>
+</section>
+<section id="section-1" class="slide level2 smaller">
+<h2></h2>
+<div class="columns">
+<div class="column" style="width:30%;">
+<p><br><br><br> <strong>n8n</strong></p>
+</div><div class="column" style="width:70%;">
+<p>n8n is an open-source, node-based workflow automation tool that enables users to connect various apps and services to automate tasks without extensive coding (<strong>No-code/low-code</strong>).</p>
+<ul>
+<li class="fragment">Automates complex workflows by connecting APIs, databases, and cloud services.</li>
+<li class="fragment">Offers a visual, drag-and-drop interface to build workflows.</li>
+<li class="fragment">Supports custom code with JavaScript (and Python) for advanced logic.</li>
+<li class="fragment">Self-hostable, providing data privacy and control.</li>
+<li class="fragment">Integrates with hundreds of applications out-of-the-box.</li>
+<li class="fragment">Useful for automating repetitive tasks, data synchronization, and alerts.</li>
+<li class="fragment"><strong>Note:</strong> Everything we build in n8n can also be done in Python, for example.</li>
+</ul>
+</div></div>
+</section>
+<section id="introduction-course" class="slide level2">
+<h2>Introduction course</h2>
+<ul>
+<li class="fragment">Introduction course.</li>
+<li class="fragment">Takes app. 2 hours.</li>
+<li class="fragment">Gives you the fundamentals.</li>
+<li class="fragment">Try it out while reading the course.</li>
+</ul>
+</section>
+<section id="local-vs.-cloud-n8n" class="slide level2">
+<h2>Local vs.&nbsp;Cloud n8n</h2>
+<ul>
+<li class="fragment">n8n is available in both a local and a cloud version.</li>
+<li class="fragment"><strong>In this course, we will use the local version.</strong>
+<ul>
+<li class="fragment"><strong>Free</strong>: No subscription or costs.</li>
+<li class="fragment"><strong>Privacy</strong>: No GDPR issues (your data stays on your machine).</li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="ollama" class="title-slide slide level1 center">
+<h1>Ollama</h1>
+
+</section>
+<section id="ollama-1" class="slide level2">
+<h2>Ollama</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="images/ollama_logo.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</div><div class="column" style="width:60%;">
+<h3 id="local-llm-runner"><strong>Local LLM Runner</strong></h3>
+<ul>
+<li class="fragment"><strong>Run AI Locally</strong>: Allows you to run powerful models (like Llama 3 or Mistral) on your own computer.</li>
+<li class="fragment"><strong>Privacy &amp; Speed</strong>: No data leaves your machine, and there is no latency from the cloud.</li>
+<li class="fragment"><strong>Easy Integration</strong>: Connects perfectly with n8n to act as the “Brain” for your local agents.</li>
+<li class="fragment"><strong>Free</strong>: No API costs or monthly subscriptions.</li>
+<li class="fragment"><strong>CLI integration</strong>: Integrates with Claude Code, COdex, etc. via Ollama Launch.</li>
+</ul>
+</div></div>
+</section></section>
+<section>
+<section id="install-n8n-systems" class="title-slide slide level1 center">
+<h1>Install n8n systems</h1>
+
+</section>
+<section id="how-to-install-n8n-locally" class="slide level2">
+<h2>How to Install n8n Locally</h2>
+<p>You have two main paths to run n8n on your own computer. Both are free and private.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="option-a-docker-recommended"><strong>Option A: Docker (Recommended)</strong></h3>
+<ul>
+<li class="fragment"><strong>Pros:</strong> Isolated environment, easy to backup, professional standard.</li>
+<li class="fragment"><strong>Cons:</strong> Requires installing Docker Desktop first.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<h3 id="option-b-npx-npm"><strong>Option B: npx / npm</strong></h3>
+<ul>
+<li class="fragment"><strong>Pros:</strong> Instant start if you already have Node.js.</li>
+<li class="fragment"><strong>Cons:</strong> Brittle; if you close the terminal, n8n stops. Harder to manage long-term.</li>
+</ul>
+</div></div>
+</section>
+<section id="installation-npx-node.js" class="slide level2">
+<h2>Installation: npx (Node.js)</h2>
+<p>If you don’t want to use Docker, you can run n8n directly using Node.js.</p>
+<ol type="1">
+<li class="fragment"><p><strong>Requirement</strong>: Ensure you have <a href="https://nodejs.org/">Node.js</a> installed.</p></li>
+<li class="fragment"><p><strong>Run this command</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a aria-label="1"></a><span class="ex">npx</span> n8n</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li class="fragment"><p><strong>Keep it open</strong>: Do <strong>not</strong> close this terminal window while working, or n8n will stop.</p></li>
+<li class="fragment"><p><strong>Access</strong>: Open <code>http://localhost:5678</code>.</p></li>
+</ol>
+<p><em>Note: Your data is saved in your user home folder under <code>/.n8n</code>.</em> {.fragment}</p>
+</section>
+<section id="which-should-i-choose" class="slide level2">
+<h2>Which should I choose?</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Docker (Recommended)</th>
+<th style="text-align: left;">npx / npm</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Ease of Setup</strong></td>
+<td style="text-align: left;">Medium (Install Docker)</td>
+<td style="text-align: left;">Easy (if Node.js exists)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Data Safety</strong></td>
+<td style="text-align: left;"><strong>High</strong> (Stored in Volume)</td>
+<td style="text-align: left;">Medium (Stored in Home dir)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Stability</strong></td>
+<td style="text-align: left;">High (Runs in background)</td>
+<td style="text-align: left;">Low (Stops when terminal closes)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Updates</strong></td>
+<td style="text-align: left;">Very Easy</td>
+<td style="text-align: left;">Manual</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>Teacher’s Advice:</strong> Use Docker. It prepares you for how AI Agents are actually deployed in the real world.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="step-by-step-docker-setup-i" class="slide level2">
+<h2>Step-by-Step: Docker Setup I</h2>
+<ol type="1">
+<li class="fragment"><strong>Install Docker Desktop</strong>
+<ul>
+<li class="fragment">Download for Mac/Windows: <a href="https://www.docker.com/products/docker-desktop/">docker.com/products/docker-desktop</a></li>
+<li class="fragment"><strong>Important</strong>: Start the Docker Desktop application after installation and keep it running.</li>
+</ul></li>
+<li class="fragment"><strong>Ensure Docker Desktop is Running</strong>
+<ul>
+<li class="fragment">Verify the Docker icon in your system tray/menubar indicates it’s active.</li>
+</ul></li>
+</ol>
+</section>
+<section id="step-by-step-docker-setup-ii" class="slide level2">
+<h2>Step-by-Step: Docker Setup II</h2>
+<ol start="3" type="1">
+<li class="fragment"><strong>Open your Terminal</strong>
+<ul>
+<li class="fragment"><strong>Mac</strong>: Terminal or iTerm2.</li>
+<li class="fragment"><strong>Windows</strong>: PowerShell or Command Prompt.</li>
+</ul></li>
+<li class="fragment"><strong>Run the command</strong> (See next slides for your specific OS).</li>
+<li class="fragment"><strong>Access n8n</strong>:
+<ul>
+<li class="fragment">Open your browser to: <code>http://localhost:5678</code></li>
+</ul></li>
+</ol>
+</section>
+<section id="running-n8n-mac-linux" class="slide level2">
+<h2>Running n8n (Mac &amp; Linux)</h2>
+<p>Copy and paste this command into your terminal to run n8n in the background:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a aria-label="1"></a><span class="ex">docker</span> run <span class="at">-d</span> <span class="dt">\</span></span>
+<span id="cb2-2"><a aria-label="2"></a>  <span class="at">--name</span> n8n <span class="dt">\</span></span>
+<span id="cb2-3"><a aria-label="3"></a>  <span class="at">-p</span> 5678:5678 <span class="dt">\</span></span>
+<span id="cb2-4"><a aria-label="4"></a>  <span class="at">-v</span> ~/.n8n:/home/node/.n8n <span class="dt">\</span></span>
+<span id="cb2-5"><a aria-label="5"></a>  n8nio/n8n</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p>The -v ~/.n8n:/home/node/.n8n part ensures your workflows are saved in your user’s home folder.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="running-n8n-windows-powershell" class="slide level2">
+<h2>Running n8n (Windows PowerShell)</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource powershell number-lines code-with-copy"><code class="sourceCode powershell"><span id="cb3-1"><a aria-label="1"></a>docker run <span class="op">-</span>d `</span>
+<span id="cb3-2"><a aria-label="2"></a>  <span class="op">--</span>name n8n `</span>
+<span id="cb3-3"><a aria-label="3"></a>  <span class="op">-</span>p <span class="dv">5678</span><span class="op">:</span><span class="dv">5678</span> `</span>
+<span id="cb3-4"><a aria-label="4"></a>  <span class="op">-</span>v <span class="pp">${</span><span class="va">env:USERPROFILE</span><span class="pp">}</span>\<span class="op">.</span><span class="fu">n8n</span><span class="op">:/</span>home<span class="op">/</span>node<span class="op">/.</span><span class="fu">n8n</span> `</span>
+<span id="cb3-5"><a aria-label="5"></a>  n8nio<span class="op">/</span>n8n</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="why-these-specific-flags" class="slide level2">
+<h2>Why these specific flags?</h2>
+<ul>
+<li class="fragment"><strong><code>-d</code> (Detached)</strong>: Runs the container in the background. You can close your terminal and n8n will keep running.</li>
+<li class="fragment"><strong><code>--name n8n</code></strong>: Gives the container a friendly name so you don’t have to remember a random ID.</li>
+<li class="fragment"><strong><code>-p 5678:5678</code></strong>: Maps the internal n8n port to your computer’s port.</li>
+<li class="fragment"><strong><code>-v (Volume)</code></strong>: <strong>The most important part.</strong> This links a folder on your computer to n8n. Without this, your work vanishes when the container stops.</li>
+</ul>
+</section>
+<section id="docker-management" class="slide level2 nonincremental">
+<h2>Docker Management</h2>
+<ul>
+<li class="fragment"><strong>Access</strong>: <code>http://localhost:5678</code></li>
+<li class="fragment"><strong>Stop</strong>: <code>docker stop n8n</code></li>
+<li class="fragment"><strong>Start</strong>: <code>docker start n8n</code></li>
+<li class="fragment"><strong>Update</strong>:
+<ol type="1">
+<li class="fragment"><code>docker pull n8nio/n8n</code></li>
+<li class="fragment"><code>docker stop n8n &amp;&amp; docker rm n8n</code></li>
+<li class="fragment">Run the “docker run” command again.</li>
+</ol></li>
+</ul>
+</section>
+<section id="section-2" class="slide level2" data-background-image="images/Docker_n8n.png" data-background-size="contain">
+<h2></h2>
+<!-- This slide is intentionally left blank to let the image fill the screen -->
+</section></section>
+<section>
+<section id="setup-n8n-account" class="title-slide slide level1 center">
+<h1>Setup n8n account</h1>
+
+</section>
+<section id="setting-up-your-account" class="slide level2">
+<h2>Setting Up Your Account</h2>
+<div class="columns">
+<div class="column" style="width:60%;">
+<h3 id="initial-configuration"><strong>Initial Configuration</strong></h3>
+<ul>
+<li class="fragment"><strong>Use a working email address</strong>: This is required to create your local owner account and receive your license.</li>
+<li class="fragment"><strong>Get the free license key</strong>:
+<ul>
+<li class="fragment">You will be prompted to get a community license.</li>
+<li class="fragment">Activate it via the link sent to your email.</li>
+</ul></li>
+<li class="fragment"><strong>If you missed the prompt</strong>:
+<ul>
+<li class="fragment">You can activate it later in the interface.</li>
+<li class="fragment">Go to <strong>Settings -&gt; Usage and plan</strong>.</li>
+</ul></li>
+</ul>
+<div class="callout callout-important callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important</strong></p>
+</div>
+<div class="callout-content">
+<p>Activating the free license is essential—it is often required to use the advanced AI nodes in n8n!</p>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:40%;">
+<p><img data-src="images/n8n_setup_account.png"></p>
+<p><em>The first screen you will see at http://localhost:5678</em></p>
+</div></div>
+</section>
+<section id="section-3" class="slide level2" data-background-image="images/lec1_n8n_workflow.png" data-background-size="contain">
+<h2></h2>
+<!-- This slide is intentionally left blank to let the image fill the screen -->
+</section>
+<section id="welcome-to-the-dashboard" class="slide level2">
+<h2>Welcome to the Dashboard</h2>
+<div class="columns">
+<div class="column smaller" style="width:35%;">
+<h3 id="your-control-center"><strong>Your Control Center</strong></h3>
+<ul>
+<li class="fragment"><strong>Workflows</strong>: This is where you build your automation logic.</li>
+<li class="fragment"><strong>Credentials</strong>: Where you safely store keys for Gmail, ChatGPT, etc.</li>
+<li class="fragment"><strong>Executions</strong>: The “History” tab—see exactly what happened in past runs.</li>
+<li class="fragment"><strong>Templates</strong>: A great place to find inspiration and pre-built logic.</li>
+</ul>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Look for the <strong>“Test a simple AI Agent example”</strong> button—it’s a great way to see an agent in action immediately!</p>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:65%;">
+<p><img data-src="images/n8n_welcome.png" class="fragment"></p>
+<p><em>The overview screen after a successful setup.</em></p>
+</div></div>
+</section>
+<section id="section-4" class="slide level2" data-background-image="images/n8n_personlization1.png" data-background-size="contain">
+<h2></h2>
+</section>
+<section id="section-5" class="slide level2" data-background-image="images/n8n_personlization2.png" data-background-size="contain">
+<h2></h2>
+</section>
+<section id="dont-let-your-workflows-disappear" class="slide level2">
+<h2>Don’t Let Your Workflows Disappear!</h2>
+<ul>
+<li class="fragment"><strong>Volume Mapping</strong> keeps your workflows stored on your physical hard drive instead of inside the temporary Docker container.</li>
+<li class="fragment"><strong>Without the <code>-v</code> flag</strong>: All your work is deleted every time the container is stopped or updated.</li>
+<li class="fragment"><strong>How it works</strong>: Your local folder is “linked” to <code>/home/node/.n8n</code> inside the container in real-time.</li>
+</ul>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Data Safety</strong></p>
+</div>
+<div class="callout-content">
+<p>Think of the Docker container like a hotel room: if you don’t put your things in the “Safe” (the Volume), the maid (Docker) will clear everything out when you check out!</p>
+</div>
+</div>
+</div>
+</section>
+<section id="verify-your-setup" class="slide level2 nonincremental">
+<h2>Verify Your Setup</h2>
+<p>To ensure your data is actually saving to your hard drive, perform this “Stress Test”:</p>
+<ol type="1">
+<li class="fragment"><p><strong>Create</strong> a simple “Hello World” workflow in n8n and save it.</p></li>
+<li class="fragment"><p><strong>Stop</strong> the engine in your terminal:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a aria-label="1"></a><span class="ex">docker</span> stop n8n</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li class="fragment"><p><strong>Check</strong>: Refresh <code>http://localhost:5678</code>. The site should be unreachable.</p></li>
+<li class="fragment"><p><strong>Restart</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a aria-label="1"></a><span class="ex">docker</span> start n8n</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li class="fragment"><p><strong>Confirm</strong>: Refresh the browser. <strong>Is your workflow still there?</strong></p></li>
+</ol>
+<h3 id="where-is-my-data"><strong>Where is my data?</strong></h3>
+<ul>
+<li class="fragment"><strong>Windows</strong>: <code>C:\Users\&lt;your-name&gt;\.n8n</code></li>
+<li class="fragment"><strong>Mac/Linux</strong>: <code>~/.n8n</code></li>
+</ul>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Backup Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Copy this folder to a USB stick or cloud drive occasionally. It contains all your workflows and credentials!</p>
+</div>
+</div>
+</div>
+</section>
+<section id="n8n-where-to-find-your-data" class="slide level2">
+<h2>n8n: Where to find your data</h2>
+<ul>
+<li class="fragment"><strong>Windows</strong>: <code>C:\Users\&lt;YourUsername&gt;\.n8n</code></li>
+<li class="fragment"><strong>macOS/Linux</strong>: <code>~/.n8n</code><br>
+<em>(Full path: <code>/Users/&lt;YourUsername&gt;/.n8n</code> or <code>/home/&lt;YourUsername&gt;/.n8n</code>)</em></li>
+</ul>
+<h3 id="the-most-important-file">The Most Important File</h3>
+<ul>
+<li class="fragment"><strong><code>database.sqlite</code></strong>
+<ul>
+<li class="fragment">This single file contains <strong>all</strong> your workflows, credentials, and settings.</li>
+<li class="fragment">If you lose this file, you lose your work.</li>
+<li class="fragment"><strong>Back it up!</strong></li>
+</ul></li>
+</ul>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Finding Hidden Folders</strong></p>
+</div>
+<div class="callout-content">
+<p>Folders starting with a dot (like <code>.n8n</code>) are often <strong>hidden</strong> by default. - <strong>Mac</strong>: Press <code>Cmd + Shift + .</code> in Finder to show hidden files. - <strong>Windows</strong>: Enable “Hidden items” under the <strong>View</strong> tab in File Explorer.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ollama-2" class="slide level2">
+<h2>Ollama</h2>
+<p>We will install and connect it to n8n next time</p>
+</section>
+<section id="later" class="slide level2">
+<h2>Later</h2>
+<ul>
+<li class="fragment">Docker</li>
+<li class="fragment">Qdrant</li>
+<li class="fragment">NEO4J</li>
+</ul>
+</section></section>
+<section id="n8n-demo" class="title-slide slide level1 center">
+<h1>n8n Demo</h1>
+
+</section>
+
+<section id="exercises" class="title-slide slide level1 center">
+<h1>Exercises</h1>
+<p><a href="https://vogelsang.github.io/AI-Agenter-F2026-public/exercises/week01-exercises.html">Link on GitHub</a></p>
+
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>lec3 – AI-Agenter-F2026</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-fe3f5f6e38db2c2d47e3b6a3088dad65.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-sidebar docked quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">
+      AI-Agenter-F2026
+      </li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">AI-Agenter-F2026</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Course Information</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../about.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../modules/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modules</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/week01-module.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 1: Introducion</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/week02-module.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 2: n8n Workflows</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/week03-module.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 3: AI Agents</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/week04-module.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 4: Large Language Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/week05-module.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 5: Prompt enginnering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/week06-module.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 6: multi agents and vibe coding</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/week08-module.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 8: Graph RAG</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/week09-module.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 9: Project</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/week10-module.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 10: Påske evt. online vejledning</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/week11-module.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 11: 2. påskedag</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/week12-module.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 12: MCP - use of MCP</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/week13-module.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 13: MCP - setup your own MCP server - project feedback</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/week14-module.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 14: Start final project</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/week15-module.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 15: Review of case</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../modules/week16-module.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 16: Afsluttende projekt</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../slides/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Slides</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/week01-slides.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1. AI agenter og automatisering</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/week02-slides.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2. Introduction to n8n</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/week03-slides.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3. AI agenter</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/week04-slides.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4. Large Language Models</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/week05-slides.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5. Prompt engineering - vibe coding</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/week06-slides.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6. multi agents and vibe coding</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/week07-slides.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">7. Vector RAG</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/week08-slides.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">8. Graph RAG</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/week09-slides.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">9. Visit and project start</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/week10-slides.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">10. Easter - online project Q&amp;A</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/week11-slides.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">11. Easter</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/week12-slides.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">12. Model Context Protocol - MCP</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/week13-slides.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">13. MCP servers</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../slides/week14-slides.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">14. Project startup</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../exercises/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exercises</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/week01-exercises.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 1: Introduction to AI Agents</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../exercises/week02-exercises.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Week 2 exercise: Backup Workflows</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../projects/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Projects</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../projects/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Projects</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../projects/two-week-project.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Two-week project</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../projects/final-project.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Final project</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../web/final-exam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Final Exam</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../web/final-exam.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Final exam</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction-to-ai-agents" id="toc-introduction-to-ai-agents" class="nav-link active" data-scroll-target="#introduction-to-ai-agents">Introduction to AI Agents</a></li>
+  <li><a href="#agenda" id="toc-agenda" class="nav-link" data-scroll-target="#agenda">Agenda</a></li>
+  <li><a href="#oplevelser-med-n8n" id="toc-oplevelser-med-n8n" class="nav-link" data-scroll-target="#oplevelser-med-n8n">Oplevelser med n8n</a></li>
+  <li><a href="#ai-agent-introduction" id="toc-ai-agent-introduction" class="nav-link" data-scroll-target="#ai-agent-introduction">AI Agent introduction</a></li>
+  <li><a href="#ai-agents" id="toc-ai-agents" class="nav-link" data-scroll-target="#ai-agents">AI agents</a></li>
+  <li><a href="#llm-vs.-ai-agent" id="toc-llm-vs.-ai-agent" class="nav-link" data-scroll-target="#llm-vs.-ai-agent">LLM vs.&nbsp;AI Agent</a></li>
+  <li><a href="#elements-of-an-ai-agent" id="toc-elements-of-an-ai-agent" class="nav-link" data-scroll-target="#elements-of-an-ai-agent">Elements of an AI Agent</a></li>
+  <li><a href="#slide-8" id="toc-slide-8" class="nav-link" data-scroll-target="#slide-8">Slide 8</a></li>
+  <li><a href="#prompt-user-message" id="toc-prompt-user-message" class="nav-link" data-scroll-target="#prompt-user-message">Prompt (User&nbsp;Message)</a></li>
+  <li><a href="#system-message" id="toc-system-message" class="nav-link" data-scroll-target="#system-message">System message</a></li>
+  <li><a href="#the-brain-ai-models" id="toc-the-brain-ai-models" class="nav-link" data-scroll-target="#the-brain-ai-models">The brain (AI models)</a></li>
+  <li><a href="#thought-action-observation-cycle" id="toc-thought-action-observation-cycle" class="nav-link" data-scroll-target="#thought-action-observation-cycle">Thought-Action-Observation Cycle</a></li>
+  <li><a href="#the-body-capabilities-and-tools" id="toc-the-body-capabilities-and-tools" class="nav-link" data-scroll-target="#the-body-capabilities-and-tools">The Body (Capabilities and Tools)</a></li>
+  <li><a href="#tools" id="toc-tools" class="nav-link" data-scroll-target="#tools">Tools</a></li>
+  <li><a href="#tools-should" id="toc-tools-should" class="nav-link" data-scroll-target="#tools-should">Tools should…</a></li>
+  <li><a href="#tools-to-the-agent" id="toc-tools-to-the-agent" class="nav-link" data-scroll-target="#tools-to-the-agent">Tools to the agent</a></li>
+  <li><a href="#calculator-tool" id="toc-calculator-tool" class="nav-link" data-scroll-target="#calculator-tool">Calculator tool</a></li>
+  <li><a href="#agents-vs-llm-models" id="toc-agents-vs-llm-models" class="nav-link" data-scroll-target="#agents-vs-llm-models">Agents vs (LLM) models</a></li>
+  <li><a href="#spectrum-of-agents" id="toc-spectrum-of-agents" class="nav-link" data-scroll-target="#spectrum-of-agents">Spectrum of agents</a></li>
+  <li><a href="#architecture-sequential-agents" id="toc-architecture-sequential-agents" class="nav-link" data-scroll-target="#architecture-sequential-agents">Architecture –&nbsp; sequential&nbsp; agents</a></li>
+  <li><a href="#multi--agents" id="toc-multi--agents" class="nav-link" data-scroll-target="#multi--agents">Multi -agents</a></li>
+  <li><a href="#how-to-create-ai-agents" id="toc-how-to-create-ai-agents" class="nav-link" data-scroll-target="#how-to-create-ai-agents">How to create AI agents</a></li>
+  <li><a href="#another-intro-video" id="toc-another-intro-video" class="nav-link" data-scroll-target="#another-intro-video">Another intro video…</a></li>
+  <li><a href="#n8n-agenter" id="toc-n8n-agenter" class="nav-link" data-scroll-target="#n8n-agenter">n8n agenter</a></li>
+  <li><a href="#n8n-agenter-de-forskellige-typer" id="toc-n8n-agenter-de-forskellige-typer" class="nav-link" data-scroll-target="#n8n-agenter-de-forskellige-typer">N8n agenter – de forskellige typer</a></li>
+  <li><a href="#ai-agent" id="toc-ai-agent" class="nav-link" data-scroll-target="#ai-agent">AI agent</a></li>
+  <li><a href="#information-extracter" id="toc-information-extracter" class="nav-link" data-scroll-target="#information-extracter">Information&nbsp; extracter</a></li>
+  <li><a href="#basic-llm-chain" id="toc-basic-llm-chain" class="nav-link" data-scroll-target="#basic-llm-chain">Basic LLM chain</a></li>
+  <li><a href="#question-and-answer-chain" id="toc-question-and-answer-chain" class="nav-link" data-scroll-target="#question-and-answer-chain">Question and answer chain</a></li>
+  <li><a href="#summarization-chain" id="toc-summarization-chain" class="nav-link" data-scroll-target="#summarization-chain">Summarization chain</a></li>
+  <li><a href="#demo---ai-agenten" id="toc-demo---ai-agenten" class="nav-link" data-scroll-target="#demo---ai-agenten">Demo - AI agenten</a></li>
+  <li><a href="#agent-tutorial" id="toc-agent-tutorial" class="nav-link" data-scroll-target="#agent-tutorial">Agent tutorial</a></li>
+  <li><a href="#øvelse---nyhedsbrev" id="toc-øvelse---nyhedsbrev" class="nav-link" data-scroll-target="#øvelse---nyhedsbrev">Øvelse - ” nyhedsbrev ”</a></li>
+  <li><a href="#etl" id="toc-etl" class="nav-link" data-scroll-target="#etl">ETL</a></li>
+  <li><a href="#exercise" id="toc-exercise" class="nav-link" data-scroll-target="#exercise">Exercise</a></li>
+  <li><a href="#arkitektur" id="toc-arkitektur" class="nav-link" data-scroll-target="#arkitektur">Arkitektur</a></li>
+  <li><a href="#baseline-løsning-v.-1.0" id="toc-baseline-løsning-v.-1.0" class="nav-link" data-scroll-target="#baseline-løsning-v.-1.0">Baseline løsning v. 1.0</a></li>
+  <li><a href="#human-in-the-loop.-v.-2.0" id="toc-human-in-the-loop.-v.-2.0" class="nav-link" data-scroll-target="#human-in-the-loop.-v.-2.0">Human in the loop. v. 2.0</a></li>
+  <li><a href="#mere-data-og-udvælge-information---v.-3.0" id="toc-mere-data-og-udvælge-information---v.-3.0" class="nav-link" data-scroll-target="#mere-data-og-udvælge-information---v.-3.0">Mere data og udvælge information - v. 3.0</a></li>
+  <li><a href="#næste-gang" id="toc-næste-gang" class="nav-link" data-scroll-target="#næste-gang">Næste gang…</a></li>
+  <li><a href="#spørgeskema" id="toc-spørgeskema" class="nav-link" data-scroll-target="#spørgeskema">Spørgeskema</a></li>
+  <li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1">Exercise</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<section id="introduction-to-ai-agents" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-to-ai-agents">Introduction to AI Agents</h2>
+<p>Lec. 3 AI Agents and Automation</p>
+</section>
+<section id="agenda" class="level2">
+<h2 class="anchored" data-anchor-id="agenda">Agenda</h2>
+<p>Introduktion til agenter</p>
+<p>Agenter &nbsp; i n8n</p>
+<p>Øvelse - ” Nyhedsbrev ”</p>
+</section>
+<section id="oplevelser-med-n8n" class="level2">
+<h2 class="anchored" data-anchor-id="oplevelser-med-n8n">Oplevelser med n8n</h2>
+<p>Udfordringer?</p>
+<p>Tips og tricks?</p>
+</section>
+<section id="ai-agent-introduction" class="level2">
+<h2 class="anchored" data-anchor-id="ai-agent-introduction">AI Agent introduction</h2>
+</section>
+<section id="ai-agents" class="level2">
+<h2 class="anchored" data-anchor-id="ai-agents">AI agents</h2>
+<p>An Agent is a system that leverages an AI model to interact with its environment in order to achieve a user-defined objective.</p>
+<p>It combines reasoning, planning, and the execution of actions (often via external tools) to fulfill tasks.</p>
+<p>![A diagram of a process</p>
+<p>AI-generated content may be incorrect.](./slides/lec3_files/ppt/media/image1.png “Content Placeholder 3”)</p>
+</section>
+<section id="llm-vs.-ai-agent" class="level2">
+<h2 class="anchored" data-anchor-id="llm-vs.-ai-agent">LLM vs.&nbsp;AI Agent</h2>
+<p>![Et billede, der indeholder tekst, skærmbillede, Font/skrifttype, nummer/tal</p>
+<p>Indhold genereret af kunstig intelligens kan være forkert.](./slides/lec3_files/ppt/media/image2.jpeg “Content Placeholder 3”)</p>
+</section>
+<section id="elements-of-an-ai-agent" class="level2">
+<h2 class="anchored" data-anchor-id="elements-of-an-ai-agent">Elements of an AI Agent</h2>
+<p>Perception</p>
+<ul>
+<li>It’s the ability to gather information from its environment.</li>
+</ul>
+<p>Decision-making</p>
+<ul>
+<li>This is the agent’s “brain.” Based on its perception (the information gathered) and its programmed goals, the agent decides what to do next.</li>
+<li>LLMs, rule-based systems, Machine learning models (classifications)</li>
+<li>The agent can plan ahead (“think”</li>
+</ul>
+<p>Action</p>
+<ul>
+<li>Once a decision is made, the agent needs to act upon it.</li>
+<li>Send message to user, call an API, run a workflow, update DB, etc.</li>
+<li>Happens trough definition of tools or function calling</li>
+</ul>
+<p>Memory</p>
+<ul>
+<li>Agents often need to remember past interactions or learned information to provide context for future decisions.</li>
+</ul>
+<!-- -->
+<ul>
+<li>Recall previous interaction</li>
+<li>Knowledge databases (RAGs)</li>
+</ul>
+<!-- -->
+<ul>
+<li></li>
+</ul>
+</section>
+<section id="slide-8" class="level2">
+<h2 class="anchored" data-anchor-id="slide-8">Slide 8</h2>
+<p>![A diagram of a computer</p>
+<p>AI-generated content may be incorrect.](./slides/lec3_files/ppt/media/image3.jpeg “Picture 3”)</p>
+</section>
+<section id="prompt-user-message" class="level2">
+<h2 class="anchored" data-anchor-id="prompt-user-message">Prompt (User&nbsp;Message)</h2>
+<p>The prompt or the user message is the input to the AI agent</p>
+<ul>
+<li>The is the&nbsp;request to the agent</li>
+</ul>
+<p>It does not have to be a human</p>
+<ul>
+<li>It can be other systems and even other agents</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./slides/lec3_files/ppt/media/image4.png" title="Picture 4" class="img-fluid figure-img"></p>
+<figcaption>Sample Message For Wedding Card Chat Message Icon Design In Blue Circle. 14441089 PNG Message For Wedding Card Funny Message For Wedding Card Funny Friend</figcaption>
+</figure>
+</div>
+</section>
+<section id="system-message" class="level2">
+<h2 class="anchored" data-anchor-id="system-message">System message</h2>
+<p>System messages (also called System Prompts) define how the model should behave .</p>
+<ul>
+<li>This is where you can get the agent to talk like a pirate – or something more usefull</li>
+</ul>
+<p>![A screenshot of a computer</p>
+<p>AI-generated content may be incorrect.](./slides/lec3_files/ppt/media/image5.png “Picture 3”)</p>
+</section>
+<section id="the-brain-ai-models" class="level2">
+<h2 class="anchored" data-anchor-id="the-brain-ai-models">The brain (AI models)</h2>
+<p>This is where all the thinking happens.</p>
+<p>The AI model handles reasoning and planning.</p>
+<p>It decides which Actions to take based on the situation.</p>
+<p>The brain is your LLM</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./slides/lec3_files/ppt/media/image6.jpeg" title="Picture 3" class="img-fluid figure-img"></p>
+<figcaption>15+ Thousand Cute Brain Icon Royalty-Free Images, Stock Photos &amp; Pictures | Shutterstock</figcaption>
+</figure>
+</div>
+</section>
+<section id="thought-action-observation-cycle" class="level2">
+<h2 class="anchored" data-anchor-id="thought-action-observation-cycle">Thought-Action-Observation Cycle</h2>
+<p>The Core Components</p>
+<p>Agents work in a continuous cycle of: thinking (Thought) → acting (Act) and observing (Observe)</p>
+<ol type="1">
+<li><p>Thought: The LLM part of the Agent decides what the next step should be.</p></li>
+<li><p>Action: The agent takes an action, by calling the tools with the associated arguments.</p></li>
+<li><p>Observation: The model reflects on the response from the tool.</p></li>
+</ol>
+<p>![A diagram of a process</p>
+<p>AI-generated content may be incorrect.](./slides/lec3_files/ppt/media/image7.png “Content Placeholder 3”)</p>
+</section>
+<section id="the-body-capabilities-and-tools" class="level2">
+<h2 class="anchored" data-anchor-id="the-body-capabilities-and-tools">The Body (Capabilities and Tools)</h2>
+<p>This part represents everything the Agent is equipped to do.</p>
+<p>The scope of possible actions depends on what the agent has been equipped with.</p>
+<ul>
+<li>For example, because humans lack wings, they can’t perform the “fly” Action, but they can execute Actions like “walk”, “run” ,“jump”, “grab”, and so on.</li>
+</ul>
+<p>![A screenshot of a computer</p>
+<p>AI-generated content may be incorrect.](./slides/lec3_files/ppt/media/image8.png “Picture 3”)</p>
+</section>
+<section id="tools" class="level2">
+<h2 class="anchored" data-anchor-id="tools">Tools</h2>
+<p>A Tool is a function given to the LLM.</p>
+<p>![A screenshot of a computer</p>
+<p>AI-generated content may be incorrect.](./slides/lec3_files/ppt/media/image9.png “Picture 3”)</p>
+</section>
+<section id="tools-should" class="level2">
+<h2 class="anchored" data-anchor-id="tools-should">Tools should…</h2>
+<p>A good tool should be something that complements the power of an LLM .</p>
+<ul>
+<li>For instance, if you need to perform arithmetic, giving a calculator tool to your LLM will provide better results than relying on the native capabilities of the model.</li>
+<li>LLMs predict the completion of a prompt based on their training data , which means that their internal knowledge only includes events prior to their training. Therefore, if your agent needs up-to-date data you must provide it through some tool.</li>
+</ul>
+<p>A Tool should contain:</p>
+<ul>
+<li>A textual description of what the function does .</li>
+<li>A Callable (something to perform an action).</li>
+<li>Arguments with typings.</li>
+<li>(Optional) Outputs with typings.</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./slides/lec3_files/ppt/media/image10.jpeg" title="Picture 4" class="img-fluid figure-img"></p>
+<figcaption>Buildings underwater</figcaption>
+</figure>
+</div>
+</section>
+<section id="tools-to-the-agent" class="level2">
+<h2 class="anchored" data-anchor-id="tools-to-the-agent">Tools to the agent</h2>
+<p>For this to work, we must be very precise and accurate about:</p>
+<ul>
+<li>What the tool does</li>
+<li>What exact inputs it expects</li>
+</ul>
+<p>![A screen shot of a computer</p>
+<p>AI-generated content may be incorrect.](./slides/lec3_files/ppt/media/image11.png “Content Placeholder 3”)</p>
+</section>
+<section id="calculator-tool" class="level2">
+<h2 class="anchored" data-anchor-id="calculator-tool">Calculator tool</h2>
+<p>Tool Name: calculator,</p>
+<p>Description: Multiply two integers.,</p>
+<p>Arguments: a: int, b: int,</p>
+<p>Outputs: int</p>
+</section>
+<section id="agents-vs-llm-models" class="level2">
+<h2 class="anchored" data-anchor-id="agents-vs-llm-models">Agents vs (LLM) models</h2>
+<p>Agents can find their own strategy or path for solving a task</p>
+<p>Models are “fixed”…</p>
+<p>10minutes to talk about the difference between Agents and LLMs</p>
+<ul>
+<li>Start “solo” for 2-3 minute and use the rest of the time with the person sitting next to you</li>
+</ul>
+</section>
+<section id="spectrum-of-agents" class="level2">
+<h2 class="anchored" data-anchor-id="spectrum-of-agents">Spectrum of agents</h2>
+<p>Agents exist on a continuous spectrum of increasing agency</p>
+<p>![A black screen with white text</p>
+<p>AI-generated content may be incorrect.](./slides/lec3_files/ppt/media/image12.png “Content Placeholder 3”)</p>
+</section>
+<section id="architecture-sequential-agents" class="level2">
+<h2 class="anchored" data-anchor-id="architecture-sequential-agents">Architecture –&nbsp; sequential&nbsp; agents</h2>
+<p>Chain the AI agents</p>
+<p>One agent’s output feeds into the next, creating a linear workflow</p>
+<p>Parallel agents execute multiple tasks simultaneously</p>
+<p>Serial execution is suitable for predictable, multi-step processes</p>
+<p>Parallel execution is better for complex problems requiring simultaneous effort and faster overall completion, enabling more efficient resource use and breaking down large tasks.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./slides/lec3_files/ppt/media/image13.png" title="Picture 3" class="img-fluid figure-img"></p>
+<figcaption>Three Types of AI Agents: Solo, Sequential, and Swarm Intelligence</figcaption>
+</figure>
+</div>
+</section>
+<section id="multi--agents" class="level2">
+<h2 class="anchored" data-anchor-id="multi--agents">Multi -agents</h2>
+<p>A multi -agent system consists of multiple specialized agents working together under the coordination of an Orchestrator Agent.</p>
+<p>This approach enables complex workflows by distributing tasks among agents with distinct roles.</p>
+<p>![A diagram of a web search</p>
+<p>AI-generated content may be incorrect.](./slides/lec3_files/ppt/media/image14.png “Picture 3”)</p>
+</section>
+<section id="how-to-create-ai-agents" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-create-ai-agents">How to create AI agents</h2>
+<p>Code from stratch</p>
+<p>Use frameworks</p>
+<ul>
+<li>LangChain, LlamaIndex, Semantic Kernel, or Autogen</li>
+<li>Requires coding</li>
+</ul>
+<p>Platforms as n8n</p>
+<ul>
+<li>Visual node based – low entry barrier</li>
+<li>“no-code”, but still technical to setup</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./slides/lec3_files/ppt/media/image15.jpeg" title="Picture 4" class="img-fluid figure-img"></p>
+<figcaption>Computer script on a screen</figcaption>
+</figure>
+</div>
+</section>
+<section id="another-intro-video" class="level2">
+<h2 class="anchored" data-anchor-id="another-intro-video">Another intro video…</h2>
+<p>Extra video?</p>
+<p>Building AI Agents: Chat Trigger, Memory, and System/User Messages Explained [Part 1]</p>
+<p>https://www.youtube.com/watch?v=yzvLfHb0nqE</p>
+</section>
+<section id="n8n-agenter" class="level2">
+<h2 class="anchored" data-anchor-id="n8n-agenter">n8n agenter</h2>
+<p>Demo og typer</p>
+</section>
+<section id="n8n-agenter-de-forskellige-typer" class="level2">
+<h2 class="anchored" data-anchor-id="n8n-agenter-de-forskellige-typer">N8n agenter – de forskellige typer</h2>
+<p>Sentiment – analyserer en tekst og giver et tal på om den er positiv , neutral eller negativ</p>
+<p>![A screenshot of a computer</p>
+<p>AI-generated content may be incorrect.](./slides/lec3_files/ppt/media/image16.png “Content Placeholder 4”)</p>
+</section>
+<section id="ai-agent" class="level2">
+<h2 class="anchored" data-anchor-id="ai-agent">AI agent</h2>
+<p>Generer en plan og eksekverer den</p>
+<p>Kan bruge eksterne “tools</p>
+<p>Kan tilføjes &nbsp;tools</p>
+<p>Kan&nbsp;system og bruger promptes / instrueres</p>
+<p>Formentlig &nbsp;den I kommer til at bruge mest</p>
+<p>![A screenshot of a computer</p>
+<p>AI-generated content may be incorrect.](./slides/lec3_files/ppt/media/image17.png “Content Placeholder 3”)</p>
+</section>
+<section id="information-extracter" class="level2">
+<h2 class="anchored" data-anchor-id="information-extracter">Information&nbsp; extracter</h2>
+<p>Ekstraherer information i et struktureret format</p>
+<p>![A screen shot of a computer</p>
+<p>AI-generated content may be incorrect.](./slides/lec3_files/ppt/media/image18.png “Content Placeholder 3”)</p>
+</section>
+<section id="basic-llm-chain" class="level2">
+<h2 class="anchored" data-anchor-id="basic-llm-chain">Basic LLM chain</h2>
+<p>Til at prompte LLMer</p>
+<p>![A computer screen shot of a diagram</p>
+<p>AI-generated content may be incorrect.](./slides/lec3_files/ppt/media/image19.png “Content Placeholder 3”)</p>
+</section>
+<section id="question-and-answer-chain" class="level2">
+<h2 class="anchored" data-anchor-id="question-and-answer-chain">Question and answer chain</h2>
+<p>Spørgsmål og svar om et givent dokument</p>
+<p>![A diagram of a question and answer chain</p>
+<p>AI-generated content may be incorrect.](./slides/lec3_files/ppt/media/image20.png “Content Placeholder 3”)</p>
+</section>
+<section id="summarization-chain" class="level2">
+<h2 class="anchored" data-anchor-id="summarization-chain">Summarization chain</h2>
+<p>Transformerer en tekst til en kortfattet referat</p>
+<p>![A screen shot of a computer</p>
+<p>AI-generated content may be incorrect.](./slides/lec3_files/ppt/media/image21.png “Content Placeholder 3”)</p>
+</section>
+<section id="demo---ai-agenten" class="level2">
+<h2 class="anchored" data-anchor-id="demo---ai-agenten">Demo - AI agenten</h2>
+<p>User prompts</p>
+<p>System prompt</p>
+<p>Indsætte data i prompts</p>
+<p>Tilføje LLM</p>
+<p>Memory</p>
+<p>![A screenshot of a computer</p>
+<p>AI-generated content may be incorrect.](./slides/lec3_files/ppt/media/image22.png “Picture 3”)</p>
+</section>
+<section id="agent-tutorial" class="level2">
+<h2 class="anchored" data-anchor-id="agent-tutorial">Agent tutorial</h2>
+<p>https://docs.n8n.io/advanced-ai/intro-tutorial/</p>
+<p>![A diagram of a chat service</p>
+<p>AI-generated content may be incorrect.](./slides/lec3_files/ppt/media/image23.png “Picture 3”)</p>
+</section>
+<section id="øvelse---nyhedsbrev" class="level2">
+<h2 class="anchored" data-anchor-id="øvelse---nyhedsbrev">Øvelse - ” nyhedsbrev ”</h2>
+<p>Find information – transformer - send</p>
+</section>
+<section id="etl" class="level2">
+<h2 class="anchored" data-anchor-id="etl">ETL</h2>
+<p>ETL stands for Extract, Transform, Load and is a core data integration process where data is pulled from various sources, cleaned and converted into a usable format, and then stored in a target system, such as a data warehouse, for analysis and business intelligence.</p>
+<p>Vi bruger samme princip til at få data&nbsp;klar til vores agenter</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./slides/lec3_files/ppt/media/image24.png" title="Picture 3" class="img-fluid figure-img"></p>
+<figcaption>ETL process flow diagram. Step 1: Extract. Step 2: Transform. Step 3: Load | Informatica</figcaption>
+</figure>
+</div>
+</section>
+<section id="exercise" class="level2">
+<h2 class="anchored" data-anchor-id="exercise">Exercise</h2>
+<p>Lav dit eget nyhedsbrev</p>
+<p>Opsæt en trigger</p>
+<p>Find info fra</p>
+<ul>
+<li>RSS feeds, scrape hjemmesider , søgning på youtube videoer ( transkriper dem), e-mails, reddit, …</li>
+<li>Start med noget simpelt og få det til at virke</li>
+</ul>
+<p>Sæt en &nbsp; eller flere agenter op til at for skrive jeres nyhedsbrev</p>
+<p>Send nyhedsbrevet til jer selv (email, chat, Google docs, etc.)</p>
+<p>Inspiration til andre : Skriv kort &nbsp; hvad I har gjort &nbsp; på Teams kanalen – evt . Screenshot af workflow</p>
+</section>
+<section id="arkitektur" class="level2">
+<h2 class="anchored" data-anchor-id="arkitektur">Arkitektur</h2>
+<p>Load data</p>
+<p>Agent sætter nyhedsbrev op</p>
+<p>Afsendelse af nyhedsbrev</p>
+</section>
+<section id="baseline-løsning-v.-1.0" class="level2">
+<h2 class="anchored" data-anchor-id="baseline-løsning-v.-1.0">Baseline løsning v. 1.0</h2>
+<p>Extract data</p>
+<ul>
+<li>Brug en “source”, reddit, rss</li>
+</ul>
+<p>Agent</p>
+<ul>
+<li>Formaterer data</li>
+</ul>
+<p>Send newsletter</p>
+<p>Use case – send info om de seneste opdateringer i n8n (del det workflow - så sætter jeg det i produktion , hvis det poster til vores Teams kanal - tak !)</p>
+</section>
+<section id="human-in-the-loop.-v.-2.0" class="level2">
+<h2 class="anchored" data-anchor-id="human-in-the-loop.-v.-2.0">Human in the loop. v. 2.0</h2>
+<p>Data</p>
+<ul>
+<li>Brug forskellige “sources”, måske stadig af samme typer</li>
+</ul>
+<p>Merge data fra forskellige sources</p>
+<p>Human in the loop</p>
+<ul>
+<li>Send nyhedsbrev til “human” til check</li>
+<li>Menneskelig feedback, som agenten skal bruge &nbsp; i ” næste loop”</li>
+</ul>
+</section>
+<section id="mere-data-og-udvælge-information---v.-3.0" class="level2">
+<h2 class="anchored" data-anchor-id="mere-data-og-udvælge-information---v.-3.0">Mere data og udvælge information - v. 3.0</h2>
+<p>Data</p>
+<ul>
+<li>Flere &nbsp; og &nbsp; forskellige &nbsp;data sources</li>
+<li>Scrape en hjemmeside</li>
+</ul>
+<p>Agenter</p>
+<ul>
+<li>Agenter udvælger information baseret på kriterier , som I stiller op for den/dem</li>
+<li>Hold styr på at der ikke er for meget / lidt indhold</li>
+</ul>
+<p>Sende informationen ud I forskellige formater</p>
+<p>Håndtering af afviste mails, etc.</p>
+</section>
+<section id="næste-gang" class="level2">
+<h2 class="anchored" data-anchor-id="næste-gang">Næste gang…</h2>
+<p>Hvad er LLMer ?</p>
+<p>AI historien</p>
+<p>Introduktion til Ollama</p>
+</section>
+<section id="spørgeskema" class="level2">
+<h2 class="anchored" data-anchor-id="spørgeskema">Spørgeskema</h2>
+</section>
+<section id="exercise-1" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-1">Exercise</h2>
+<p>What is a “Simple Agent”? An AI that makes a decision and routes information.</p>
+<p>Project: Build an “Email/Support Ticket Classifier.”</p>
+<p>Trigger: Read new emails (e.g., via IMAP).</p>
+<p>LLM Node: Send the email content to Ollama with a prompt like: “Classify this email into one of the following categories: ‘Sales Inquiry’, ‘Technical Support’, ‘Billing Question’, or ‘Spam’.”</p>
+<p>Logic (If/Switch nodes): Route the email to different channels (Slack, Trello board, etc.) based on the LLM’s classification.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
